@@ -19,11 +19,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct SwiftUI_TCA_CombineApp: App {
     let persistenceController = PersistenceController.shared
-
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     var body: some Scene {
         WindowGroup {
             GitHubMainView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

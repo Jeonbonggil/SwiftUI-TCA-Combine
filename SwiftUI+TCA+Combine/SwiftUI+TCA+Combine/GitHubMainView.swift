@@ -6,81 +6,59 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct GitHubMainView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
-    var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
-                    }
-                }
-                .onDelete(perform: deleteItems)
+   private let buttonWidth = UIScreen.main.bounds.width / 2
+   private let buttonHeight = 50.0
+   @State private var barPoint = CGPoint(x: 0, y: 0)
+   @State var searchText = ""
+   
+   var body: some View {
+      NavigationView {
+         VStack() {
+            Text("Github Stars")
+               .frame(alignment: .leading)
+            
+            VStack {
+               HStack {
+                  Button {
+                     withAnimation {
+                        barPoint.x = 0
+                     }
+                  } label: {
+                     Text("API")
+                        .frame(width: buttonWidth, height: buttonHeight)
+                        .border(Color.black, width: 1)
+                        .foregroundStyle(Color.black)
+                  }
+                  
+                  Button {
+                     withAnimation {
+                        barPoint.x = buttonWidth
+                     }
+                  } label: {
+                     Text("Local")
+                        .frame(width: buttonWidth, height: buttonHeight)
+                        .border(Color.black, width: 1)
+                        .foregroundStyle(Color.black)
+                  }
+               }
+               .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+               
+               Rectangle()
+                  .position(barPoint)
+                  .frame(width: buttonWidth, height: 2)
+                  .foregroundColor(.blue)
+               
+               TextField("검색어를 입력해주세요.", text: $searchText)
+                  .padding()
+                  .border(Color.black, width: 1)
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
+         }
+      }
+   }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
 #Preview {
-    GitHubMainView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+   GitHubMainView()
 }
