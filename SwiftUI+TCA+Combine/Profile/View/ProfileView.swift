@@ -9,30 +9,30 @@ import SwiftUI
 import Kingfisher
 
 struct ProfileView: View {
-   var imageSize = 60.0
-   var starSzie = 30.0
+   private var imageSize = 60.0
+   private var starSzie = 30.0
    var initial = "A"
    var profileImageUrl: String? = nil
    var userName = "김땡땡"
    @State var isSelected = false
    
    var body: some View {
-      VStack(alignment: .leading) {
+      VStack(alignment: .leading, spacing: 0) {
          Text(initial)
             .font(.system(size: 17.0))
             .foregroundColor(Color.black)
             .bold()
             .padding(EdgeInsets(top: 0, leading: 15, bottom: 10, trailing: 15))
             .frame(maxWidth: Screen.width, alignment: .leading)
+            .border(Color.red, width: 1)
          
-         HStack(alignment: .center) {
+         HStack(alignment: .center, spacing: 0) {
             if let imageUrl = profileImageUrl {
                KFImage(URL(string: imageUrl))
                   .resizable()
                   .scaledToFill()
                   .frame(width: imageSize, height: imageSize)
                   .clipShape(Circle())
-                  .padding(0)
             } else {
                Image(systemName: "person.circle.fill")
                   .resizable()
@@ -45,6 +45,7 @@ struct ProfileView: View {
                .foregroundColor(Color.black)
                .lineLimit(2)
                .padding(EdgeInsets(top: 0, leading: 19, bottom: 0, trailing: 15))
+               .frame(minWidth: 280, alignment: .leading)
             
             Image(systemName: isSelected ? "star.fill" : "star")
                .foregroundStyle(Color.blue)
@@ -55,10 +56,11 @@ struct ProfileView: View {
                   }
                }
          }
-         .frame(width: Screen.width)
+         .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+         .frame(width: Screen.width, alignment: .leading)
+         .border(Color.blue, width: 1)
       }
       .frame(width: Screen.width, height: 105.0)
-      .padding(0.0)
       .border(Color.black, width: 1)
    }
 }

@@ -10,7 +10,9 @@ import CoreData
 
 struct Application {
     static var keyWindow: UIWindow {
-        return UIApplication.shared.windows.first { $0.isKeyWindow } ?? UIWindow()
+       let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+       let window = windowScene?.windows.first ?? UIWindow()
+       return window
     }
 }
 
