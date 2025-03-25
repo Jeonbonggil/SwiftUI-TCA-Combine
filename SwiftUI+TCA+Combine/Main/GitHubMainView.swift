@@ -17,46 +17,48 @@ struct GitHubMainView: View {
         NavigationView {
             VStack(alignment: .leading, spacing: 0) {
                 Text("Github Stars")
-                    .frame(alignment: .leading)
-                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 10, trailing: 15))
+                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 10, trailing: 0))
                 
-                VStack {
-                    HStack {
-                        Button {
-                            withAnimation {
-                                barPoint.x = 0
+                VStack(spacing: 0) {
+                    ZStack(alignment: .bottom) {
+                        HStack(spacing: 0) {
+                            Button {
+                                withAnimation {
+                                    barPoint.x = 0
+                                }
+                            } label: {
+                                Text("API")
+                                    .frame(width: buttonWidth, height: buttonHeight)
+                                    .border(Color.black, width: 1)
+                                    .foregroundStyle(Color.black)
                             }
-                        } label: {
-                            Text("API")
-                                .frame(width: buttonWidth, height: buttonHeight)
-                                .border(Color.black, width: 1)
-                                .foregroundStyle(Color.black)
+                            
+                            Button {
+                                withAnimation {
+                                    barPoint.x = buttonWidth
+                                }
+                            } label: {
+                                Text("Local")
+                                    .frame(width: buttonWidth, height: buttonHeight)
+                                    .border(Color.black, width: 1)
+                                    .foregroundStyle(Color.black)
+                            }
                         }
+                        .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
                         
-                        Button {
-                            withAnimation {
-                                barPoint.x = buttonWidth
-                            }
-                        } label: {
-                            Text("Local")
-                                .frame(width: buttonWidth, height: buttonHeight)
-                                .border(Color.black, width: 1)
-                                .foregroundStyle(Color.black)
-                        }
+                        Rectangle()
+                            .position(barPoint)
+                            .frame(width: buttonWidth, height: 2)
+                            .foregroundColor(.blue)
                     }
-                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                    
-                    Rectangle()
-                        .position(barPoint)
-                        .frame(width: buttonWidth, height: 2)
-                        .foregroundColor(.blue)
                     
                     TextField("검색어를 입력해주세요.", text: $searchText)
                         .padding()
                         .border(Color.black, width: 1)
+                    
+//                    List
                 }
             }
-//            .padding(15)
         }
     }
 }
