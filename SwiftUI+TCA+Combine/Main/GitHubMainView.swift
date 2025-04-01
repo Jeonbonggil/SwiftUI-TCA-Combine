@@ -17,7 +17,7 @@ struct GitHubMainView: View {
         NavigationView {
             VStack(alignment: .leading, spacing: 0) {
                 Text("Github Stars")
-                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 10, trailing: 0))
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 10, trailing: 0))
                 
                 VStack(spacing: 0) {
                     ZStack(alignment: .bottom) {
@@ -56,7 +56,11 @@ struct GitHubMainView: View {
                         .padding()
                         .border(Color.black, width: 1)
                     
-//                    List
+//                    List {
+//                        ForEach() {
+//                            
+//                        }
+//                    }
                 }
             }
         }
