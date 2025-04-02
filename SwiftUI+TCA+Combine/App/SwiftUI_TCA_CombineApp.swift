@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
@@ -18,12 +19,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct SwiftUI_TCA_CombineApp: App {
-    let persistenceController = PersistenceController.shared
+    let persistenceController = PersistenceManager.shared
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
-            GitHubMainView()
+            GitHubMainView(
+                store: Store(initialState: GitHubMainFeature.State(searchText: "", selectedTab: .api)) {
+                    GitHubMainFeature()
+                }
+            )
 //                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

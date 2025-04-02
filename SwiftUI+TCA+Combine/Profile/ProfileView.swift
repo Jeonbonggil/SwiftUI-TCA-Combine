@@ -6,10 +6,9 @@
 //
 
 import Combine
-import SwiftUI
-
 import ComposableArchitecture
 import Kingfisher
+import SwiftUI
 
 struct ProfileView: View {
     let store: StoreOf<ProfileFeature>
@@ -32,7 +31,9 @@ struct ProfileView: View {
                             .resizable()
                             .scaledToFill()
                             .frame(width: imageSize, height: imageSize)
-                            .clipShape(Circle())
+//                            .clipShape(Circle())
+                            .border(Color.black, width: 1)
+                            .cornerRadius(imageSize / 2)
                     } else {
                         Image(systemName: "person.circle.fill")
                             .resizable()
@@ -51,12 +52,14 @@ struct ProfileView: View {
                         .foregroundStyle(Color.blue)
                         .frame(width: starSzie, height: starSzie)
                         .onTapGesture {
+                            viewStore.send(.favoriteButtonTapped)
+                            
                             withAnimation {
-                                viewStore.state.profile.isFavorite.toggle()
+                                // Do something
                             }
                         }
                 }
-                .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                .padding([.leading, .trailing], 15)
                 .frame(width: Screen.width, alignment: .leading)
             }
             .frame(width: Screen.width, height: 105.0)
@@ -65,13 +68,14 @@ struct ProfileView: View {
 }
 
 #Preview {
-    @State var initial: String? = "A"
-    @State var profileImageURL: String? = "https://avatars.githubusercontent.com/u/14283190?v=4"
-    @State var userName: String? = "전땡땡"
-    
+    let profile = Profile(
+        initial: "A",
+        imageURL: "https://avatars.githubusercontent.com/u/14283190?v=4",
+        userName: "April Kim"
+    )
     ProfileView(
-        initial: initial,
-        profileImageURL: $profileImageURL,
-        userName: $userName
+        store: Store(initialState: ProfileFeature.State(profile: profile)) {
+            ProfileFeature()
+        }
     )
 }

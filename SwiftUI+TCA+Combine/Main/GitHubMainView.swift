@@ -6,18 +6,21 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct GitHubMainView: View {
-    private let buttonWidth = UIScreen.main.bounds.width / 2
+    let store: StoreOf<GitHubMainFeature>
+    private let buttonWidth = Screen.width / 2
     private let buttonHeight = 50.0
     @State private var barPoint = CGPoint(x: 0, y: 0)
     @State var searchText = ""
     
     var body: some View {
-        NavigationView {
+        WithViewStore(store, observe: { $0 }) { viewStore in
             VStack(alignment: .leading, spacing: 0) {
                 Text("Github Stars")
-                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 10, trailing: 0))
+                    .font(.title)
+                    .padding(EdgeInsets(top: 10, leading: 25, bottom: 20, trailing: 0))
                 
                 VStack(spacing: 0) {
                     ZStack(alignment: .bottom) {
@@ -27,7 +30,7 @@ struct GitHubMainView: View {
                                     barPoint.x = 0
                                 }
                             } label: {
-                                Text("API")
+                                Text(MenuTab.api.title)
                                     .frame(width: buttonWidth, height: buttonHeight)
                                     .border(Color.black, width: 1)
                                     .foregroundStyle(Color.black)
@@ -38,7 +41,7 @@ struct GitHubMainView: View {
                                     barPoint.x = buttonWidth
                                 }
                             } label: {
-                                Text("Local")
+                                Text(MenuTab.favorite.title)
                                     .frame(width: buttonWidth, height: buttonHeight)
                                     .border(Color.black, width: 1)
                                     .foregroundStyle(Color.black)
@@ -53,14 +56,30 @@ struct GitHubMainView: View {
                     }
                     
                     TextField("검색어를 입력해주세요.", text: $searchText)
+                        .submitLabel(.search)
+                        .onSubmit {
+                            // 검색 후 처리
+                            store.send(.searchTextDidChange(searchText))
+                        }
                         .padding()
                         .border(Color.black, width: 1)
                     
-//                    List {
-//                        ForEach() {
-//                            
-//                        }
-//                    }
+                    ScrollView {
+                        LazyVStack {
+                            ForEach(0..<10) { _ in
+                                let profile = Profile(
+                                    initial: "A",
+                                    imageURL: "https://avatars.githubusercontent.com/u/14283190?v=4",
+                                    userName: "April Kim"
+                                )
+                                ProfileView(
+                                    store: Store(initialState: ProfileFeature.State(profile: profile)) {
+                                        ProfileFeature()
+                                    }
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -68,5 +87,7 @@ struct GitHubMainView: View {
 }
 
 #Preview {
-    GitHubMainView()
+    GitHubMainView(store: Store(initialState: GitHubMainFeature.State(searchText: "", selectedTab: .api)) {
+        
+    })
 }

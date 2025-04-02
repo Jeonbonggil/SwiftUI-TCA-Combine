@@ -8,10 +8,11 @@
 import Foundation
 
 struct Profile: Identifiable, Equatable {
-    var id: ObjectIdentifier
-    
+    var id: UUID = UUID()
     let initial: String?
     let imageURL: String?
     let userName: String?
     var isFavorite = false
+    
+    static let empty = Profile(initial: "", imageURL: "", userName: "")
 }
