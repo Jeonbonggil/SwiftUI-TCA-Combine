@@ -13,7 +13,7 @@ struct GitHubMainView: View {
     private let buttonWidth = Screen.width / 2
     private let buttonHeight = 50.0
     @State private var barPoint = CGPoint(x: 0, y: 0)
-    @State var searchText = ""
+    @State private var searchText = ""
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
@@ -66,12 +66,7 @@ struct GitHubMainView: View {
                     
                     ScrollView {
                         LazyVStack {
-                            ForEach(0..<10) { _ in
-                                let profile = Profile(
-                                    initial: "A",
-                                    imageURL: "https://avatars.githubusercontent.com/u/14283190?v=4",
-                                    userName: "April Kim"
-                                )
+                            ForEach(viewStore.state.profile) { profile in
                                 ProfileView(
                                     store: Store(initialState: ProfileFeature.State(profile: profile)) {
                                         ProfileFeature()

@@ -8,13 +8,6 @@
 import Foundation
 import Moya
 
-// MARK: - Provider support
-public struct UserParameters: Equatable {
-    var name: String
-    var page: Int
-    var perPage: Int
-}
-
 public enum GitHubAPI {
     case searchUsers(UserParameters)
 }

@@ -1,10 +1,11 @@
 //
-//	Item.swift
+//	Profile.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
-struct Item: Codable {
+struct Profile: Codable, Identifiable, Equatable {
+    var id = UUID()
     var initial: String = ""        // 초성(즐겨찾기용)
 	let username: String		    // 사용자 이름
     let avatarURL: String           // 프로필 이미지 URL

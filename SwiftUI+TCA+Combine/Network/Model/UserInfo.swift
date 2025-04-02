@@ -6,6 +6,6 @@ import Foundation
 
 struct UserInfo: Codable {
 	let incomplete_results: Bool
-	var items: [Item]
+	var profile: [Profile]
 	let total_count: Int
 }

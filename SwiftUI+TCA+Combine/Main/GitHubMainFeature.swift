@@ -25,6 +25,7 @@ enum MenuTab: Int, Equatable, Identifiable, CaseIterable {
 @Reducer
 struct GitHubMainFeature {
     struct State: Equatable {
+        var profile: [Profile] = []
         var searchText = ""
         var userParameters = UserParameters(name: "", page: 1, perPage: 30)
         var selectedTab: MenuTab = .api
@@ -61,6 +62,7 @@ struct GitHubMainFeature {
                 Task {
                     do {
                         let result = try await apiManager.searchUsers(param: userParameters)
+                        state.profile = result.profile
                     } catch {
                         print(error.localizedDescription)
                     }
