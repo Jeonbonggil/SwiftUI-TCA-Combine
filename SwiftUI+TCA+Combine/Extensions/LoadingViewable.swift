@@ -12,22 +12,22 @@ import UIKit
 //import RxCocoa
 
 protocol LoadingViewable {
-    func startAnimating()
-    func stopAnimating()
+  func startAnimating()
+  func stopAnimating()
 }
 
 extension UIView: LoadingViewable {
-    // MARK: - LoadingViewable
+  // MARK: - LoadingViewable
 }
 
 extension LoadingViewable where Self: UIView {
-    func startAnimating() {
-        LoadingView.shared.show()
-    }
-    
-    func stopAnimating() {
-        LoadingView.shared.hide()
-    }
+  func startAnimating() {
+    LoadingView.shared.show()
+  }
+  
+  func stopAnimating() {
+    LoadingView.shared.hide()
+  }
 }
 
 //extension Reactive where Base: UIView {

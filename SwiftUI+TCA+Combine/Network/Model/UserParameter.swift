@@ -8,7 +8,7 @@
 import Foundation
 
 public struct UserParameters: Equatable {
-    var name: String
-    var page: Int
-    var perPage: Int
+  var name: String
+  var page: Int
+  var perPage: Int
 }

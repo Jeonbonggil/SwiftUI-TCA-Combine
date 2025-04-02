@@ -9,23 +9,23 @@ import UIKit
 import CoreData
 
 struct Application {
-    static var keyWindow: UIWindow {
-       let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-       let window = windowScene?.windows.first ?? UIWindow()
-       return window
-    }
+  static var keyWindow: UIWindow {
+    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+    let window = windowScene?.windows.first ?? UIWindow()
+    return window
+  }
 }
 
 struct Screen {
-    static var width: CGFloat {
-        return UIScreen.main.bounds.width
-    }
-    static var height: CGFloat {
-        return UIScreen.main.bounds.height
-    }
-    static var statusBarHeight: CGFloat {
-        return Application.keyWindow.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-    }
+  static var width: CGFloat {
+    return UIScreen.main.bounds.width
+  }
+  static var height: CGFloat {
+    return UIScreen.main.bounds.height
+  }
+  static var statusBarHeight: CGFloat {
+    return Application.keyWindow.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+  }
 }
 
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
