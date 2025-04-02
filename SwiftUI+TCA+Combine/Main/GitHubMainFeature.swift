@@ -64,7 +64,7 @@ struct GitHubMainFeature {
                 return .run { send in
                     do {
                         let result = try await apiManager.searchUsers(param: userParameters)
-                        await send(.updateProfile(result.profile))
+                        await send(.updateProfile(result.profile ?? []))
                     } catch {
                         print(error.localizedDescription)
                     }
