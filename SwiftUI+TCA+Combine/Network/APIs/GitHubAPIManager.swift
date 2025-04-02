@@ -57,6 +57,7 @@ final public class GitHubAPIManager {
       print("😁👍🏻💪🏻\(api.self) Response Status Code: \(response.statusCode)")
       print("😁👍🏻💪🏻\(api.self) Response Data: \(JSONResponseDataFormatter(response.data))")
       let object = try response.map(ResponseObject.self)
+      retryCount = 200...299 ~= response.statusCode ? 0 : retryCount + 1
       switch response.statusCode {
       case 200...299:
         return object
@@ -68,6 +69,10 @@ final public class GitHubAPIManager {
         throw APIError.decodeError(response.description)
       }
     } catch {
+      if retryCount < Self.maxRetryCount {
+        retryCount += 1
+        return try await requestAPI(api: api.self) as ResponseObject
+      }
       print("🤦🏻‍♂️🤦🏻‍♂️🤦🏻‍♂️ \(api.self) request error: \(error)")
       throw APIError.decodeError(try result.get().description)
     }

@@ -9,6 +9,10 @@ import SwiftUI
 import ComposableArchitecture
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+  static let shared: AppDelegate = {
+    return UIApplication.shared.delegate as! AppDelegate
+  }()
+  
   func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil

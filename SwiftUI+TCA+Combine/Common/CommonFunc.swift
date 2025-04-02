@@ -27,5 +27,3 @@ struct Screen {
     return Application.keyWindow.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
   }
 }
-
-let appDelegate = UIApplication.shared.delegate as! AppDelegate
