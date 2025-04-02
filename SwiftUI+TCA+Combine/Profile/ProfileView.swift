@@ -19,9 +19,8 @@ struct ProfileView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             VStack(alignment: .leading, spacing: 0) {
                 Text(viewStore.profile.initial ?? "")
-                    .font(.system(size: 17.0))
+                    .font(.system(size: 17.0, weight: .bold))
                     .foregroundColor(Color.black)
-                    .bold()
                     .padding(EdgeInsets(top: 0, leading: 15, bottom: 10, trailing: 15))
                     .frame(maxWidth: Screen.width, alignment: .leading)
                 

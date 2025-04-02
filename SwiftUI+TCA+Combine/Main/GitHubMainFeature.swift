@@ -36,6 +36,8 @@ struct GitHubMainFeature {
         case searchTextDidChange(String)
         // 검색 API 호출
         case callSearchUsersAPI(UserParameters)
+        // profile 업데이트
+        case updateProfile([Profile])
         case selectedTabDidChange(MenuTab)
     }
     
@@ -59,16 +61,19 @@ struct GitHubMainFeature {
                 }
                 
             case let .callSearchUsersAPI(userParameters):
-                Task {
+                return .run { send in
                     do {
                         let result = try await apiManager.searchUsers(param: userParameters)
-                        state.profile = result.profile
+                        await send(.updateProfile(result.profile))
                     } catch {
                         print(error.localizedDescription)
                     }
                 }
-                return .none
                 
+            case let .updateProfile(profiles):
+                state.profile = profiles
+                return .none
+
             case let .selectedTabDidChange(tab):
                 state.selectedTab = tab
                 return .none

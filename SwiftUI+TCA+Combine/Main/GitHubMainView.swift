@@ -58,7 +58,7 @@ struct GitHubMainView: View {
                     TextField("검색어를 입력해주세요.", text: $searchText)
                         .submitLabel(.search)
                         .onSubmit {
-                            // 검색 후 처리
+                            // returnKey 누른 후 처리
                             store.send(.searchTextDidChange(searchText))
                         }
                         .padding()
@@ -82,7 +82,9 @@ struct GitHubMainView: View {
 }
 
 #Preview {
-    GitHubMainView(store: Store(initialState: GitHubMainFeature.State(searchText: "", selectedTab: .api)) {
-        
-    })
+    GitHubMainView(
+        store: Store(initialState: GitHubMainFeature.State(searchText: "", selectedTab: .api)) {
+            GitHubMainFeature()
+        }
+    )
 }
