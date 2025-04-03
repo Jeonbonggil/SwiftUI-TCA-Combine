@@ -12,6 +12,12 @@ public enum GitHubAPI {
   case searchUsers(UserParameters)
 }
 
+extension GitHubAPI {
+  private var token: String {
+    return Bundle.main.object(forInfoDictionaryKey: "GitHubToken") as? String ?? ""
+  }
+}
+
 extension GitHubAPI: TargetType {
   public var baseURL: URL {
     let domain = Bundle.main.object(forInfoDictionaryKey: "GitHubDomain") as? String ?? ""
@@ -52,6 +58,7 @@ extension GitHubAPI: TargetType {
   public var headers: [String: String]? {
     let headers = [
       "Accept": "application/vnd.github+json",
+      "Authorization": "Bearer \(token)",
       "X-GitHub-Api-Version": "2022-11-28"
     ]
     return headers
