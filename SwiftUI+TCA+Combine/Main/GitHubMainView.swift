@@ -80,6 +80,11 @@ struct GitHubMainView: View {
                 )
               }
             }
+            .onAppear {
+              if viewStore.state.isLoadMore {
+                store.send(.loadMore)
+              }
+            }
           }
           .refreshable {
             store.send(.callSearchUsersAPI(viewStore.userParameters))

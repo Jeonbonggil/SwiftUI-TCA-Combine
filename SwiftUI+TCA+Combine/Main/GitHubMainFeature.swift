@@ -29,6 +29,7 @@ struct GitHubMainFeature {
     var searchText = ""
     var userParameters = UserParameters()
     var selectedTab: MenuTab = .api
+    var isLoadMore = false
   }
   
   enum Action: Equatable {
@@ -38,6 +39,8 @@ struct GitHubMainFeature {
     case callSearchUsersAPI(UserParameters)
     // profile 업데이트
     case updateProfile([Profile])
+    // 검색 API 호출 (LoadMore)
+    case loadMore
     // API 새로고침
     case refreshAPI
     case selectedTabDidChange(MenuTab)
@@ -70,6 +73,12 @@ struct GitHubMainFeature {
       case let .updateProfile(profiles):
         state.profile = profiles
         return .none
+        
+      case .loadMore:
+        state.userParameters.page += 1
+        return .run { [param = state.userParameters] send in
+          await send(.callSearchUsersAPI(param))
+        }
         
       case .refreshAPI:
         state.userParameters.page = 1
