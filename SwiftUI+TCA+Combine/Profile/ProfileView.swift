@@ -53,7 +53,7 @@ struct ProfileView: View {
               viewStore.send(.favoriteButtonTapped)
               
               withAnimation {
-                // Do something
+                // TODO: 즐겨찾기 버튼 클릭 시 애니메이션 추가
               }
             }
         }

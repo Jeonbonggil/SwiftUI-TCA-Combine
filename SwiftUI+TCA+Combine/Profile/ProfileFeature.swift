@@ -18,9 +18,7 @@ struct ProfileFeature {
     case favoriteButtonTapped
   }
   
-  struct Environment {
-    var mainQueue: AnySchedulerOf<DispatchQueue>
-  }
+  @Dependency(\.mainQueue) var mainQueue
   
   var body: some ReducerOf<Self> {
     Reduce { state, action in

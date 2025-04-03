@@ -27,7 +27,7 @@ struct GitHubMainFeature {
   struct State: Equatable {
     var profile: [Profile] = []
     var searchText = ""
-    var userParameters = UserParameters(name: "", page: 1, perPage: 30)
+    var userParameters = UserParameters()
     var selectedTab: MenuTab = .api
   }
   
@@ -40,11 +40,6 @@ struct GitHubMainFeature {
     case updateProfile([Profile])
     case selectedTabDidChange(MenuTab)
   }
-  
-  //    struct Environment {
-  //        var mainQueue: AnySchedulerOf<DispatchQueue>
-  //        var gitHubAPI: GitHubAPI
-  //    }
   
   @Dependency(\.mainQueue) var mainQueue
   @Dependency(\.gitHubAPIManager) var apiManager

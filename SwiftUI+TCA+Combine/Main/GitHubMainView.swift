@@ -58,7 +58,7 @@ struct GitHubMainView: View {
           TextField("검색어를 입력해주세요.", text: $searchText)
             .submitLabel(.search)
             .onChange(of: searchText) { text in
-              // returnKey 누르지 않고 처리
+              // 검색어 입력 시 바로 검색
               store.send(.searchTextDidChange(text))
             }
             .onSubmit {

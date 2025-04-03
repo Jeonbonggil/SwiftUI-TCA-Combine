@@ -22,11 +22,11 @@ extension UIView: LoadingViewable {
 
 extension LoadingViewable where Self: UIView {
   func startAnimating() {
-    LoadingView.shared.show()
+//    LoadingView.shared.show()
   }
   
   func stopAnimating() {
-    LoadingView.shared.hide()
+//    LoadingView.shared.hide()
   }
 }
 
