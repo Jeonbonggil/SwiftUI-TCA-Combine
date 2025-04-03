@@ -16,7 +16,7 @@ struct ProfileView: View {
   private let starSzie = 30.0
   @State private var viewHeight = 105.0
   @State private var initialHeight = 0.0
-  @State private var showingSheet = false
+  @State private var showingWebviewSheet = false
   
   var body: some View {
     WithViewStore(store, observe: { $0.profile }) { viewStore in
@@ -80,9 +80,9 @@ struct ProfileView: View {
       }
       .frame(width: Screen.width, height: viewHeight)
       .onTapGesture {
-        showingSheet.toggle()
+        showingWebviewSheet.toggle()
       }
-      .sheet(isPresented: $showingSheet) {
+      .sheet(isPresented: $showingWebviewSheet) {
         if #available(iOS 16.0, *) {
           RepoWebView(url: viewStore.repositoryURL)
             .presentationDragIndicator(.visible)

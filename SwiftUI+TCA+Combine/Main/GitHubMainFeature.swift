@@ -33,15 +33,15 @@ struct GitHubMainFeature {
   }
   
   enum Action: Equatable {
-    // 검색어 입력
+    /// 검색어 입력
     case searchTextDidChange(String)
-    // 검색 API 호출
+    /// 검색 API 호출
     case callSearchUsersAPI(UserParameters)
-    // profile 업데이트
+    /// profile 업데이트
     case updateProfile([Profile])
-    // 검색 API 호출 (LoadMore)
+    /// 검색 API 호출 (LoadMore)
     case loadMore
-    // API 새로고침
+    /// API 새로고침
     case refreshAPI
     case selectedTabDidChange(MenuTab)
   }
