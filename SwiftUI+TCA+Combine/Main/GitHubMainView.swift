@@ -26,6 +26,7 @@ struct GitHubMainView: View {
           ZStack(alignment: .bottom) {
             HStack(spacing: 0) {
               Button {
+                store.send(.searchTextDidChange(searchText))
                 withAnimation {
                   barPoint.x = 0
                 }
@@ -37,6 +38,7 @@ struct GitHubMainView: View {
               }
               
               Button {
+                searchText = ""
                 withAnimation {
                   barPoint.x = buttonWidth
                 }
@@ -56,14 +58,14 @@ struct GitHubMainView: View {
           }
           
           TextField("검색어를 입력해주세요.", text: $searchText)
+            .clearButton(text: $searchText, action: {
+              searchText = ""
+              store.send(.searchTextDidChange(searchText))
+            })
             .submitLabel(.search)
             .onChange(of: searchText) { text in
               // 검색어 입력 시 바로 검색
               store.send(.searchTextDidChange(text))
-            }
-            .onSubmit {
-              // returnKey 누른 후 처리
-              store.send(.searchTextDidChange(searchText))
             }
             .padding()
             .border(Color.black, width: 1)
