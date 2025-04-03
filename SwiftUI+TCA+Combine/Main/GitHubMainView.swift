@@ -81,6 +81,9 @@ struct GitHubMainView: View {
               }
             }
           }
+          .refreshable {
+            store.send(.callSearchUsersAPI(viewStore.userParameters))
+          }
         }
       }
     }

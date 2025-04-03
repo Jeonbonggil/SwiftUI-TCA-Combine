@@ -38,6 +38,8 @@ struct GitHubMainFeature {
     case callSearchUsersAPI(UserParameters)
     // profile 업데이트
     case updateProfile([Profile])
+    // API 새로고침
+    case refreshAPI
     case selectedTabDidChange(MenuTab)
   }
   
@@ -68,6 +70,12 @@ struct GitHubMainFeature {
       case let .updateProfile(profiles):
         state.profile = profiles
         return .none
+        
+      case .refreshAPI:
+        state.userParameters.page = 1
+        return .run { [param = state.userParameters] send in
+          await send(.callSearchUsersAPI(param))
+        }
         
       case let .selectedTabDidChange(tab):
         state.selectedTab = tab
