@@ -44,14 +44,16 @@ struct ProfileView: View {
               KFImage(URL(string: imageUrl))
                 .resizable()
                 .scaledToFill()
+                .clipShape(Circle())
+                .overlay(Circle().stroke(Color.black, lineWidth: 2))
                 .frame(width: imageSize, height: imageSize)
-                .border(Color.black, width: 1)
-                .cornerRadius(imageSize / 2)
             } else {
               Image(systemName: "person.circle.fill")
                 .resizable()
                 .frame(width: imageSize, height: imageSize)
                 .foregroundStyle(Color(.systemGray4))
+                .clipShape(Circle())
+                .overlay(Circle().stroke(Color.black, lineWidth: 1))
             }
             
             Text(viewStore.userName ?? "")
@@ -93,7 +95,6 @@ struct ProfileView: View {
 }
 
 struct RepoWebView: View {
-  @Environment(\.dismiss) var dismiss
   let url: String
   
   var body: some View {
