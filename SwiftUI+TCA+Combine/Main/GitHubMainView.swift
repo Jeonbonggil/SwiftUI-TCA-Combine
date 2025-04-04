@@ -26,7 +26,8 @@ struct GitHubMainView: View {
           ZStack(alignment: .bottom) {
             HStack(spacing: 0) {
               Button {
-                store.send(.searchTextDidChange(searchText))
+                viewStore.send(.searchTextDidChange(searchText))
+                viewStore.send(.selectedTabDidChange(.api))
                 withAnimation {
                   barPoint.x = 0
                 }
@@ -38,6 +39,7 @@ struct GitHubMainView: View {
               }
               
               Button {
+                viewStore.send(.selectedTabDidChange(.favorite))
                 searchText = ""
                 withAnimation {
                   barPoint.x = buttonWidth
@@ -70,24 +72,32 @@ struct GitHubMainView: View {
             .padding()
             .border(Color.black, width: 1)
           
-          ScrollView {
-            LazyVStack {
-              ForEach(viewStore.state.profile) { profile in
-                ProfileView(
-                  store: Store(initialState: ProfileFeature.State(profile: profile)) {
-                    ProfileFeature()
+          ScrollViewReader { proxy in
+            ScrollView {
+              LazyVStack(spacing: 0) {
+                ForEach(
+                  Array(viewStore.state.profile.enumerated()),
+                  id: \.offset
+                ) { index, profile in
+                  ProfileView(
+                    store: Store(initialState: ProfileFeature.State(profile: profile)) {
+                      ProfileFeature()
+                    }
+                  )
+                  .onAppear {
+                    // Infinite scrolling
+//                  print("Profile onAppear index: \(index)")
+                    store.send(.loadMore(index))
                   }
-                )
+                }
               }
             }
-            .onAppear {
-              if viewStore.state.isLoadMore {
-                store.send(.loadMore)
-              }
+            .onChange(of: viewStore.state.selectedTab) { _ in
+              proxy.scrollTo(0, anchor: .top)
             }
-          }
-          .refreshable {
-            store.send(.callSearchUsersAPI(viewStore.userParameters))
+            .refreshable {
+              store.send(.callSearchUsersAPI(viewStore.userParameters))
+            }
           }
         }
       }

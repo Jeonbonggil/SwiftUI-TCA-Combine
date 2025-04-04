@@ -38,11 +38,14 @@ struct GitHubMainFeature {
     /// 검색 API 호출
     case callSearchUsersAPI(UserParameters)
     /// profile 업데이트
-    case updateProfile([Profile])
+    case updateProfile([Profile], Bool = false)
     /// 검색 API 호출 (LoadMore)
-    case loadMore
+    case loadMore(Int)
     /// API 새로고침
     case refreshAPI
+    /// 프로필 초기화
+    case resetProfile
+    /// 메뉴 탭 선택
     case selectedTabDidChange(MenuTab)
   }
   
@@ -67,18 +70,34 @@ struct GitHubMainFeature {
             await send(.updateProfile(result.profile ?? []))
           } catch {
             print(error.localizedDescription)
+            await send(.resetProfile)
           }
         }
         
-      case let .updateProfile(profiles):
-        state.profile = profiles
+      case let .updateProfile(profiles, isLoadMore):
+        state.isLoadMore = isLoadMore
+        if isLoadMore {
+          state.profile.append(contentsOf: profiles)
+          state.isLoadMore = false
+        } else {
+          state.profile = profiles
+        }
         return .none
         
-      case .loadMore:
-        state.userParameters.page += 1
-        return .run { [param = state.userParameters] send in
-          await send(.callSearchUsersAPI(param))
+      case let .loadMore(index):
+        if index == state.profile.count - 4 && !state.isLoadMore {
+          state.userParameters.page += 1
+          return .run { [param = state.userParameters] send in
+            do {
+              let result = try await apiManager.searchUsers(param: param)
+//              print("loadMore: \(index)")
+              await send(.updateProfile(result.profile ?? [], true))
+            } catch {
+              print(error.localizedDescription)
+            }
+          }
         }
+        return .none
         
       case .refreshAPI:
         state.userParameters.page = 1
@@ -86,7 +105,14 @@ struct GitHubMainFeature {
           await send(.callSearchUsersAPI(param))
         }
         
+      case .resetProfile:
+        state.profile = []
+        return .none
+        
       case let .selectedTabDidChange(tab):
+        if state.selectedTab == tab {
+          return .none
+        }
         state.selectedTab = tab
         return .none
       }
