@@ -26,17 +26,19 @@ struct ProfileView: View {
           .foregroundColor(Color.black)
           .padding(EdgeInsets(top: 0, leading: 15, bottom: 10, trailing: 15))
           .frame(maxWidth: Screen.width, alignment: .leading)
-          .background(GeometryReader { proxy in
-            Color.clear
-              .onAppear {
+          .background(
+            GeometryReader { proxy in
+              Color.clear
+                .onAppear {
                   let calculatedHeight = viewStore.initial.isEmpty ? proxy.size.height : 0
 //                  print("proxy.size.height: \(proxy.size.height), calculatedHeight: \(calculatedHeight), initialHeight: \(initialHeight), viewHeight: \(viewHeight)")
                   if calculatedHeight.isFinite && calculatedHeight >= 0 {
-                      initialHeight = calculatedHeight
-                      viewHeight = max(0, viewHeight - initialHeight)
+                    initialHeight = calculatedHeight
+                    viewHeight = max(0, viewHeight - initialHeight)
                   }
-              }
-          })
+                }
+            }
+          )
         
         NavigationView {
           HStack(alignment: .center, spacing: 0) {
@@ -45,7 +47,7 @@ struct ProfileView: View {
                 .resizable()
                 .scaledToFill()
                 .clipShape(Circle())
-                .overlay(Circle().stroke(Color.black, lineWidth: 2))
+                .overlay(Circle().stroke(Color.black, lineWidth: 1))
                 .frame(width: imageSize, height: imageSize)
             } else {
               Image(systemName: "person.circle.fill")

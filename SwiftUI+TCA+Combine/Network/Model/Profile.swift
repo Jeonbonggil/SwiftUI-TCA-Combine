@@ -7,7 +7,7 @@ import Foundation
 struct Profile: Codable, Identifiable, Equatable {
   var id = UUID()
   var initial: String = ""        // 초성(즐겨찾기용)
-  let userName: String?		    // 사용자 이름
+  let userName: String?		        // 사용자 이름
   let profileURL: String?         // 프로필 이미지 URL
   let repositoryURL: String       // 사용자 URL
   var isFavorite: Bool = false    // 즐겨찾기 여부
