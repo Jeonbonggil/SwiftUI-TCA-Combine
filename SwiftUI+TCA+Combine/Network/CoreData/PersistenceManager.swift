@@ -11,7 +11,7 @@ class PersistenceManager {
   static var shared = PersistenceManager()
   
   var persistentContainer: NSPersistentContainer = {
-    let container = NSPersistentContainer(name: "SwiftUI_TCA_Combine")
+    let container = NSPersistentContainer(name: "GitHubFavorite")
     container.loadPersistentStores(completionHandler: { (storeDescription, error) in
       if let error = error as NSError? {
         fatalError("Unresolved error \(error), \(error.userInfo)")
@@ -33,15 +33,15 @@ class PersistenceManager {
     }
   }
   /// 즐겨찾기 저장
-  func saveFavorite(favorite: Favorites) {
-    let entity = NSEntityDescription.entity(forEntityName: "UserFavorite", in: context)
+  func saveFavorite(favorite: Profile) {
+    let entity = NSEntityDescription.entity(forEntityName: "MyFavorite", in: context)
     if let entity {
       let managedObject = NSManagedObject(entity: entity, insertInto: context)
       managedObject.setValue(favorite.initial, forKey: "initial")
-      managedObject.setValue(favorite.username, forKey: "username")
-      managedObject.setValue(favorite.avatarURL, forKey: "avatarURL")
-      managedObject.setValue(favorite.isFavorite, forKey: "favorite")
-      managedObject.setValue(favorite.htmlURL, forKey: "htmlURL")
+      managedObject.setValue(favorite.userName, forKey: "userName")
+      managedObject.setValue(favorite.profileURL, forKey: "profileURL")
+      managedObject.setValue(favorite.isFavorite, forKey: "isFavorite")
+      managedObject.setValue(favorite.repositoryURL, forKey: "repositoryURL")
       do {
         try context.save()
       } catch {
