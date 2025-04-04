@@ -93,6 +93,9 @@ struct GitHubMainView: View {
                 }
               }
             }
+            .simultaneousGesture(DragGesture().onChanged { _ in
+              UIApplication.shared.endEditing()
+            })
             .onChange(of: viewStore.state.searchText) { _ in
               proxy.scrollTo(0, anchor: .top)
             }
@@ -103,7 +106,11 @@ struct GitHubMainView: View {
               viewStore.send(.refreshAPI)
             }
           }
+          
         }
+      }
+      .onTapGesture {
+        UIApplication.shared.endEditing()
       }
     }
   }
