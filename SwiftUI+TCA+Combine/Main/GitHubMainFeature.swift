@@ -59,6 +59,10 @@ struct GitHubMainFeature {
         state.searchText = text.trimmingCharacters(in: .whitespacesAndNewlines)
         state.userParameters.page = 1
         state.userParameters.name = state.searchText
+        if state.searchText.isEmpty {
+          state.profile = []
+          return .none
+        }
         return .run { [param = state.userParameters] send in
           await send(.callSearchUsersAPI(param))
         }
@@ -87,10 +91,11 @@ struct GitHubMainFeature {
       case let .loadMore(index):
         if index == state.profile.count - 4 && !state.isLoadMore {
           state.userParameters.page += 1
+          print("loadMore: \(index)")
           return .run { [param = state.userParameters] send in
             do {
               let result = try await apiManager.searchUsers(param: param)
-//              print("loadMore: \(index)")
+              guard let profile = result.profile, profile.isNotEmpty else { return }
               await send(.updateProfile(result.profile ?? [], true))
             } catch {
               print(error.localizedDescription)

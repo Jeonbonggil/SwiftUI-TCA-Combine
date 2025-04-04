@@ -62,12 +62,12 @@ struct GitHubMainView: View {
           TextField("검색어를 입력해주세요.", text: $searchText)
             .clearButton(text: $searchText, action: {
               searchText = ""
-              store.send(.searchTextDidChange(searchText))
+              viewStore.send(.searchTextDidChange(searchText))
             })
             .submitLabel(.search)
             .onChange(of: searchText) { text in
               // 검색어 입력 시 바로 검색
-              store.send(.searchTextDidChange(text))
+              viewStore.send(.searchTextDidChange(text))
             }
             .padding()
             .border(Color.black, width: 1)
@@ -76,8 +76,8 @@ struct GitHubMainView: View {
             ScrollView {
               LazyVStack(spacing: 0) {
                 ForEach(
-                  Array(viewStore.state.profile.enumerated()),
-                  id: \.offset
+                  Array(zip(viewStore.state.profile.indices, viewStore.state.profile)),
+                  id: \.0
                 ) { index, profile in
                   ProfileView(
                     store: Store(initialState: ProfileFeature.State(profile: profile)) {
@@ -87,7 +87,7 @@ struct GitHubMainView: View {
                   .onAppear {
                     // Infinite scrolling
 //                  print("Profile onAppear index: \(index)")
-                    store.send(.loadMore(index))
+                    viewStore.send(.loadMore(index))
                   }
                 }
               }
