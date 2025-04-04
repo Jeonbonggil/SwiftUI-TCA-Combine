@@ -20,6 +20,7 @@ struct GitHubMainView: View {
       VStack(alignment: .leading, spacing: 0) {
         Text("Github Stars")
           .font(.title)
+          .frame(width: Screen.width, alignment: .leading)
           .padding(EdgeInsets(top: 10, leading: 25, bottom: 20, trailing: 0))
         
         VStack(spacing: 0) {
@@ -91,6 +92,9 @@ struct GitHubMainView: View {
                   }
                 }
               }
+            }
+            .onChange(of: viewStore.state.searchText) { _ in
+              proxy.scrollTo(0, anchor: .top)
             }
             .onChange(of: viewStore.state.selectedTab) { _ in
               proxy.scrollTo(0, anchor: .top)
