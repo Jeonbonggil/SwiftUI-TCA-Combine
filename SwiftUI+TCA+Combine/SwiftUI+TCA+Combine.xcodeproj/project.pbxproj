@@ -15,7 +15,6 @@
 		44B28FFD2D9CD0C800FAEE45 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B28FF12D9CD0C800FAEE45 /* PersistenceManager.swift */; };
 		44B290062D9D191B00FAEE45 /* DependencyValues+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B290052D9D191B00FAEE45 /* DependencyValues+Extensions.swift */; };
 		44B290082D9D239800FAEE45 /* UserParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B290072D9D239800FAEE45 /* UserParameter.swift */; };
-		44B2900E2D9E477700FAEE45 /* ClearButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B2900D2D9E477700FAEE45 /* ClearButtonModifier.swift */; };
 		44E358EB2D914E6F007277F4 /* CommonFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E358E82D914E6F007277F4 /* CommonFunc.swift */; };
 		44E358F62D914EBA007277F4 /* View+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E358F32D914EBA007277F4 /* View+AutoLayout.swift */; };
 		44E358F72D914EBA007277F4 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E358F02D914EBA007277F4 /* Array.swift */; };
@@ -56,7 +55,6 @@
 		44B28FF52D9CD0C800FAEE45 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		44B290052D9D191B00FAEE45 /* DependencyValues+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DependencyValues+Extensions.swift"; sourceTree = "<group>"; };
 		44B290072D9D239800FAEE45 /* UserParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserParameter.swift; sourceTree = "<group>"; };
-		44B2900D2D9E477700FAEE45 /* ClearButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButtonModifier.swift; sourceTree = "<group>"; };
 		44E358E82D914E6F007277F4 /* CommonFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFunc.swift; sourceTree = "<group>"; };
 		44E358EC2D914EBA007277F4 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		44E358EE2D914EBA007277F4 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -82,6 +80,11 @@
 		44B2900A2D9E287F00FAEE45 /* Web */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Web;
+			sourceTree = "<group>";
+		};
+		44BA84BE2D9FBDA30093C44D /* Modifier */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Modifier;
 			sourceTree = "<group>";
 		};
 		44E358E02D913D78007277F4 /* Profile */ = {
@@ -204,7 +207,6 @@
 				44E358EF2D914EBA007277F4 /* LoadingViewable.swift */,
 				44E358F02D914EBA007277F4 /* Array.swift */,
 				44E358F32D914EBA007277F4 /* View+AutoLayout.swift */,
-				44B2900D2D9E477700FAEE45 /* ClearButtonModifier.swift */,
 				44B290052D9D191B00FAEE45 /* DependencyValues+Extensions.swift */,
 			);
 			path = Extensions;
@@ -217,6 +219,7 @@
 				44E358F42D914EBA007277F4 /* Extensions */,
 				44E358E92D914E6F007277F4 /* Common */,
 				44E358E32D913DA1007277F4 /* Main */,
+				44BA84BE2D9FBDA30093C44D /* Modifier */,
 				44B28FF72D9CD0C800FAEE45 /* Network */,
 				44E358E02D913D78007277F4 /* Profile */,
 				44B2900A2D9E287F00FAEE45 /* Web */,
@@ -254,6 +257,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				44B2900A2D9E287F00FAEE45 /* Web */,
+				44BA84BE2D9FBDA30093C44D /* Modifier */,
 				44E358E02D913D78007277F4 /* Profile */,
 				44E358E22D913D8B007277F4 /* App */,
 				44E358E32D913DA1007277F4 /* Main */,
@@ -411,7 +415,6 @@
 				44B28FFB2D9CD0C800FAEE45 /* Profile.swift in Sources */,
 				44B28FFC2D9CD0C800FAEE45 /* GitHubAPI.swift in Sources */,
 				44B28FFD2D9CD0C800FAEE45 /* PersistenceManager.swift in Sources */,
-				44B2900E2D9E477700FAEE45 /* ClearButtonModifier.swift in Sources */,
 				44E358EB2D914E6F007277F4 /* CommonFunc.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
