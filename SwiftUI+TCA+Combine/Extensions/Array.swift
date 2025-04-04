@@ -6,6 +6,10 @@
 //
 
 extension Array {
+  var isNotEmpty: Bool {
+    return !isEmpty
+  }
+  
   public subscript(safe index: Int) -> Element? {
     guard index >= 0, index < endIndex else {
       return nil

@@ -18,7 +18,7 @@
 		44B2900E2D9E477700FAEE45 /* ClearButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B2900D2D9E477700FAEE45 /* ClearButtonModifier.swift */; };
 		44E358EB2D914E6F007277F4 /* CommonFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E358E82D914E6F007277F4 /* CommonFunc.swift */; };
 		44E358F62D914EBA007277F4 /* View+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E358F32D914EBA007277F4 /* View+AutoLayout.swift */; };
-		44E358F72D914EBA007277F4 /* SafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E358F02D914EBA007277F4 /* SafeArray.swift */; };
+		44E358F72D914EBA007277F4 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E358F02D914EBA007277F4 /* Array.swift */; };
 		44E358F92D914EBA007277F4 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E358EE2D914EBA007277F4 /* Color.swift */; };
 		44E358FB2D914EBA007277F4 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E358EC2D914EBA007277F4 /* Application.swift */; };
 		44E358FC2D914EBA007277F4 /* LoadingViewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E358EF2D914EBA007277F4 /* LoadingViewable.swift */; };
@@ -61,7 +61,7 @@
 		44E358EC2D914EBA007277F4 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		44E358EE2D914EBA007277F4 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		44E358EF2D914EBA007277F4 /* LoadingViewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewable.swift; sourceTree = "<group>"; };
-		44E358F02D914EBA007277F4 /* SafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeArray.swift; sourceTree = "<group>"; };
+		44E358F02D914EBA007277F4 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		44E358F32D914EBA007277F4 /* View+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AutoLayout.swift"; sourceTree = "<group>"; };
 		44E78FA22D8A5008001F396E /* SwiftUI+TCA+Combine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI+TCA+Combine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44E78FB72D8A500B001F396E /* SwiftUI+TCA+CombineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftUI+TCA+CombineTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,7 +202,7 @@
 				44E358EC2D914EBA007277F4 /* Application.swift */,
 				44E358EE2D914EBA007277F4 /* Color.swift */,
 				44E358EF2D914EBA007277F4 /* LoadingViewable.swift */,
-				44E358F02D914EBA007277F4 /* SafeArray.swift */,
+				44E358F02D914EBA007277F4 /* Array.swift */,
 				44E358F32D914EBA007277F4 /* View+AutoLayout.swift */,
 				44B2900D2D9E477700FAEE45 /* ClearButtonModifier.swift */,
 				44B290052D9D191B00FAEE45 /* DependencyValues+Extensions.swift */,
@@ -399,7 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				44E358F62D914EBA007277F4 /* View+AutoLayout.swift in Sources */,
-				44E358F72D914EBA007277F4 /* SafeArray.swift in Sources */,
+				44E358F72D914EBA007277F4 /* Array.swift in Sources */,
 				44B290082D9D239800FAEE45 /* UserParameter.swift in Sources */,
 				44E358F92D914EBA007277F4 /* Color.swift in Sources */,
 				44E358FB2D914EBA007277F4 /* Application.swift in Sources */,
@@ -582,6 +582,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -613,6 +614,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
