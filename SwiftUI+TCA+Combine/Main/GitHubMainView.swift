@@ -96,7 +96,7 @@ struct GitHubMainView: View {
               proxy.scrollTo(0, anchor: .top)
             }
             .refreshable {
-              store.send(.callSearchUsersAPI(viewStore.userParameters))
+              viewStore.send(.refreshAPI)
             }
           }
         }
