@@ -33,7 +33,15 @@ final public class GitHubAPIManager {
   typealias failureClosure = (APIError) -> Void
   static let shared = GitHubAPIManager()
   static let maxRetryCount = 3
-  private let provider = MoyaProvider<GitHubAPI>()
+  private var provider = MoyaProvider<GitHubAPI>(session: {
+      let config = URLSessionConfiguration.default
+      config.timeoutIntervalForRequest = 10   // 요청 타임아웃 10초
+      config.timeoutIntervalForResource = 10  // 리소스 타임아웃 10초
+      config.waitsForConnectivity = true      // 연결이 설정될 때까지 대기
+      config.allowsCellularAccess = true      // LTE에서도 요청 가능하도록 설정
+      config.allowsConstrainedNetworkAccess = true // 데이터 절약 모드에서도 요청 가능
+      return Session(configuration: config)
+  }())
   private var retryCount = 0
   
   private func JSONResponseDataFormatter(_ data: Data) -> String {
