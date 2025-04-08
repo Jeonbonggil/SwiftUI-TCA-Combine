@@ -7,7 +7,7 @@
 
 import CoreData
 
-class PersistenceManager {
+actor PersistenceManager {
   static var shared = PersistenceManager()
   
   var persistentContainer: NSPersistentContainer = {
@@ -22,6 +22,9 @@ class PersistenceManager {
   var context: NSManagedObjectContext {
     return persistentContainer.viewContext
   }
+  nonisolated var myFetchRequest: NSFetchRequest<GitHubFavorite> {
+    return GitHubFavorite.fetchRequest()
+  }
   /// 저장된 데이터 조회
   func fetch<T: NSManagedObject>(request: NSFetchRequest<T>) -> [T] {
     do {
@@ -33,7 +36,7 @@ class PersistenceManager {
     }
   }
   /// 즐겨찾기 저장
-  func saveFavorite(favorite: Profile) {
+  func saveFavorite(favorite: Profile) async {
     let entity = NSEntityDescription.entity(forEntityName: "GitHubFavorite", in: context)
     if let entity {
       let managedObject = NSManagedObject(entity: entity, insertInto: context)
@@ -51,7 +54,7 @@ class PersistenceManager {
   }
   /// 즐겨찾기 삭제
   @discardableResult
-  func deleteFavorite(object: NSManagedObject) -> Bool {
+  func deleteFavorite(object: NSManagedObject) async -> Bool {
     context.delete(object)
     do {
       try context.save()
@@ -61,7 +64,7 @@ class PersistenceManager {
     }
   }
   /// 즐겨찾기 목록 수
-  func count<T: NSManagedObject>(request: NSFetchRequest<T>) -> Int? {
+  func count<T: NSManagedObject>(request: NSFetchRequest<T>) async -> Int? {
     do {
       let count = try context.count(for: request)
       return count
@@ -71,7 +74,7 @@ class PersistenceManager {
   }
   /// 즐겨찾기 전체 삭제
   @discardableResult
-  func deleteAll<T: NSManagedObject>(request: NSFetchRequest<T>) -> Bool {
+  func deleteAll<T: NSManagedObject>(request: NSFetchRequest<T>) async -> Bool {
     let request: NSFetchRequest<NSFetchRequestResult> = T.fetchRequest()
     let delete = NSBatchDeleteRequest(fetchRequest: request)
     do {

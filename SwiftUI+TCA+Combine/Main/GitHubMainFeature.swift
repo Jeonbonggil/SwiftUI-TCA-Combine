@@ -33,6 +33,8 @@ struct GitHubMainFeature {
   }
   
   enum Action: Equatable {
+    /// 메뉴 탭 선택
+    case selectedTabDidChange(MenuTab)
     /// 검색어 입력
     case searchTextDidChange(String)
     /// 검색 API 호출
@@ -45,8 +47,8 @@ struct GitHubMainFeature {
     case refreshAPI
     /// 프로필 초기화
     case resetProfile
-    /// 메뉴 탭 선택
-    case selectedTabDidChange(MenuTab)
+    /// 즐겨찾기 조회
+    case favoriteListDidChange
   }
   
   @Dependency(\.mainQueue) var mainQueue
@@ -55,6 +57,22 @@ struct GitHubMainFeature {
   var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
+      case let .selectedTabDidChange(tab):
+        state.selectedTab = tab
+        switch tab {
+        case .api:
+          state.userParameters.page = 1
+          return .run { [text = state.searchText] send in
+            await send(.searchTextDidChange(text))
+          }
+        case .favorite:
+          state.profile = state.profile.isNotEmpty ? state.profile : []
+          state.searchText = ""
+          return .run { send in
+            await send(.favoriteListDidChange)
+          }
+        }
+        
       case let .searchTextDidChange(text):
         state.searchText = text.trimmingCharacters(in: .whitespacesAndNewlines)
         state.userParameters.page = 1
@@ -114,12 +132,23 @@ struct GitHubMainFeature {
         state.profile = []
         return .none
         
-      case let .selectedTabDidChange(tab):
-        if state.selectedTab == tab {
-          return .none
+      case .favoriteListDidChange:
+        return .run { send in
+          let persistenceManager = PersistenceManager()
+          let fetchRequest = persistenceManager.myFetchRequest
+          let favoriteList = await persistenceManager.fetch(request: fetchRequest)
+          let updatedProfile = favoriteList.map {
+            Profile(
+              initial: $0.initial ?? "",
+              userName: $0.userName ?? "",
+              profileURL: $0.profileURL ?? "",
+              repositoryURL: $0.repositoryURL ?? "",
+              isFavorite: $0.isFavorite
+            )
+          }
+          await send(.updateProfile(updatedProfile))
         }
-        state.selectedTab = tab
-        return .none
+        
       }
     }
   }

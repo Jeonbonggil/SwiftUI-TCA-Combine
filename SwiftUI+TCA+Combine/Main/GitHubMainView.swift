@@ -27,7 +27,6 @@ struct GitHubMainView: View {
           ZStack(alignment: .bottom) {
             HStack(spacing: 0) {
               Button {
-                viewStore.send(.searchTextDidChange(searchText))
                 viewStore.send(.selectedTabDidChange(.api))
                 withAnimation {
                   barPoint.x = 0

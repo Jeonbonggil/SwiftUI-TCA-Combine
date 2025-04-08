@@ -12,7 +12,7 @@ struct Profile: Codable, Identifiable, Equatable {
   let repositoryURL: String       // 사용자 URL
   var isFavorite: Bool = false    // 즐겨찾기 여부
   
-  enum codingKeys: String, CodingKey {
+  enum CodingKeys: String, CodingKey {
     case userName = "login"
     case profileURL = "avatar_url"
     case repositoryURL = "html_url"
@@ -39,12 +39,4 @@ struct Profile: Codable, Identifiable, Equatable {
     self.repositoryURL = repositoryURL
     self.isFavorite = isFavorite
   }
-  
-  init(from decoder: Decoder) throws {
-    let values = try decoder.container(keyedBy: codingKeys.self)
-    userName = try values.decodeIfPresent(String.self, forKey: .userName)
-    profileURL = try values.decodeIfPresent(String.self, forKey: .profileURL)
-    repositoryURL = try values.decodeIfPresent(String.self, forKey: .repositoryURL) ?? ""
-  }
 }
-

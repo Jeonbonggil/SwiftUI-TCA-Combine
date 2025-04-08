@@ -29,13 +29,13 @@ struct ProfileView: View {
             GeometryReader { proxy in
               Color.clear
                 .onAppear {
-                  let calculatedHeight = viewStore.initial.isEmpty ? proxy.size.height : 0
                   // TODO: - UI 높이 처리 시 깨짐 현상 수정 필요
+//                  let calculatedHeight = viewStore.initial.isEmpty ? proxy.size.height : 0
 //                  print("proxy.size.height: \(proxy.size.height), calculatedHeight: \(calculatedHeight), initialHeight: \(initialHeight), viewHeight: \(viewHeight)")
-                  if calculatedHeight.isFinite && calculatedHeight >= 0 {
-                    initialHeight = calculatedHeight
-                    viewHeight = max(0, viewHeight - initialHeight)
-                  }
+//                  if calculatedHeight.isFinite && calculatedHeight >= 0 {
+//                    initialHeight = calculatedHeight
+//                    viewHeight = max(0, viewHeight - initialHeight)
+//                  }
                 }
             }
           )
@@ -70,9 +70,10 @@ struct ProfileView: View {
               .frame(width: starSzie, height: starSzie)
               .onTapGesture {
                 viewStore.send(.favoriteButtonTapped)
-                
+                print("즐겨찾기 tap: \(viewStore.isFavorite)")
                 withAnimation {
                   // TODO: 즐겨찾기 버튼 클릭 시 애니메이션 추가
+//                  viewStore.send(.favoriteButtonTapped)
                 }
               }
           }
