@@ -4,12 +4,12 @@
 
 import Foundation
 
-struct UserInfo: Codable {
+struct UserInfo: Codable, Equatable {
   let incompleteResults: Bool?
   var profile: [Profile]?
   let totalCount: Int?
   
-  enum codingKeys: String, CodingKey {
+  enum CodingKeys: String, CodingKey {
     case incompleteResults = "incomplete_results"
     case profile = "items"
     case totalCount = "total_count"
@@ -21,10 +21,7 @@ struct UserInfo: Codable {
     self.totalCount = totalCount
   }
   
-  init(from decoder: Decoder) throws {
-    let values = try decoder.container(keyedBy: codingKeys.self)
-    incompleteResults = try values.decodeIfPresent(Bool.self, forKey: .incompleteResults) ?? false
-    profile = try values.decodeIfPresent([Profile].self, forKey: .profile) ?? []
-    totalCount = try values.decodeIfPresent(Int.self, forKey: .totalCount) ?? 0
+  static var empty: UserInfo {
+    return UserInfo(incompleteResults: false, profile: [], totalCount: 0)
   }
 }

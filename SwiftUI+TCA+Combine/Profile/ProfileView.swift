@@ -5,10 +5,9 @@
 //  Created by ec-jbg on 3/24/25.
 //
 
-import Combine
+import SwiftUI
 import ComposableArchitecture
 import Kingfisher
-import SwiftUI
 
 struct ProfileView: View {
   let store: StoreOf<ProfileFeature>
@@ -31,6 +30,7 @@ struct ProfileView: View {
               Color.clear
                 .onAppear {
                   let calculatedHeight = viewStore.initial.isEmpty ? proxy.size.height : 0
+                  // TODO: - UI 높이 처리 시 깨짐 현상 수정 필요
 //                  print("proxy.size.height: \(proxy.size.height), calculatedHeight: \(calculatedHeight), initialHeight: \(initialHeight), viewHeight: \(viewHeight)")
                   if calculatedHeight.isFinite && calculatedHeight >= 0 {
                     initialHeight = calculatedHeight
@@ -85,12 +85,8 @@ struct ProfileView: View {
         showingWebviewSheet.toggle()
       }
       .sheet(isPresented: $showingWebviewSheet) {
-        if #available(iOS 16.0, *) {
-          RepoWebView(url: viewStore.repositoryURL)
-            .presentationDragIndicator(.visible)
-        } else {
-          RepoWebView(url: viewStore.repositoryURL)
-        }
+        RepoWebView(url: viewStore.repositoryURL)
+          .presentationDragIndicator(.visible)
       }
     }
   }

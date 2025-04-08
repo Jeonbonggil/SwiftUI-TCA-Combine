@@ -66,9 +66,10 @@ struct GitHubMainView: View {
               viewStore.send(.searchTextDidChange(searchText))
             })
             .submitLabel(.search)
-            .onChange(of: searchText) { text in
-              // 검색어 입력 시 바로 검색
-              viewStore.send(.searchTextDidChange(text))
+            .onSubmit {
+              // Keyboard 검색 Button 클릭 시 검색
+              viewStore.send(.searchTextDidChange(searchText))
+              UIApplication.shared.endEditing()
             }
             .padding()
             .border(Color.black, width: 1)
@@ -81,12 +82,13 @@ struct GitHubMainView: View {
                   id: \.0
                 ) { index, profile in
                   ProfileView(
-                    store: Store(initialState: ProfileFeature.State(profile: profile)) {
-                      ProfileFeature()
-                    }
+                    store: Store(
+                      initialState: ProfileFeature.State(profile: profile),
+                      reducer: { ProfileFeature() }
+                    )
                   )
                   .onAppear {
-                    // Infinite scrolling
+                    // Infinite Scrolling
 //                  print("Profile onAppear index: \(index)")
                     viewStore.send(.loadMore(index))
                   }
@@ -94,17 +96,16 @@ struct GitHubMainView: View {
               }
             }
             .simultaneousGesture(DragGesture().onChanged { _ in
+              // ScrollView에서 Drag 시 Keyboard 내리기
               UIApplication.shared.endEditing()
             })
             .onChange(of: viewStore.state.searchText) { _ in
-              proxy.scrollTo(0, anchor: .top)
+              proxy.scrollTo(0, anchor: .top) // 스크롤 최상단으로 이동
             }
             .onChange(of: viewStore.state.selectedTab) { _ in
-              proxy.scrollTo(0, anchor: .top)
+              proxy.scrollTo(0, anchor: .top) // 스크롤 최상단으로 이동
             }
-            .refreshable {
-              viewStore.send(.refreshAPI)
-            }
+            .refreshable { viewStore.send(.refreshAPI) }
           }
           
         }

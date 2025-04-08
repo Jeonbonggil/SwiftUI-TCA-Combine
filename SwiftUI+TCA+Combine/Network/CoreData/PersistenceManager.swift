@@ -34,7 +34,7 @@ class PersistenceManager {
   }
   /// 즐겨찾기 저장
   func saveFavorite(favorite: Profile) {
-    let entity = NSEntityDescription.entity(forEntityName: "MyFavorite", in: context)
+    let entity = NSEntityDescription.entity(forEntityName: "GitHubFavorite", in: context)
     if let entity {
       let managedObject = NSManagedObject(entity: entity, insertInto: context)
       managedObject.setValue(favorite.initial, forKey: "initial")
