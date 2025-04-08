@@ -28,3 +28,13 @@ struct RepositoryWebView: UIViewRepresentable {
     return
   }
 }
+
+struct RepoWebView: View {
+  let url: String
+  
+  var body: some View {
+    VStack {
+      RepositoryWebView(url: url)
+    }
+  }
+}
