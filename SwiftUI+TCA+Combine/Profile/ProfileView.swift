@@ -22,7 +22,7 @@ struct ProfileView: View {
       VStack(alignment: .leading, spacing: 0) {
         Text(viewStore.initial)
           .font(.system(size: 17.0, weight: .bold))
-          .foregroundColor(Color.black)
+          .foregroundColor(.black)
           .padding(EdgeInsets(top: 0, leading: 15, bottom: 10, trailing: 15))
           .frame(maxWidth: Screen.width, alignment: .leading)
           .background(
@@ -47,26 +47,26 @@ struct ProfileView: View {
                 .resizable()
                 .scaledToFill()
                 .clipShape(Circle())
-                .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                .overlay(Circle().stroke(.black, lineWidth: 1))
                 .frame(width: imageSize, height: imageSize)
             } else {
               Image(systemName: "person.circle.fill")
                 .resizable()
                 .frame(width: imageSize, height: imageSize)
-                .foregroundStyle(Color(.systemGray4))
+                .foregroundStyle(.gray)
                 .clipShape(Circle())
-                .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                .overlay(Circle().stroke(.black, lineWidth: 1))
             }
             
             Text(viewStore.userName ?? "")
               .font(.system(size: 17.0))
-              .foregroundColor(Color.black)
+              .foregroundColor(.black)
               .lineLimit(2)
               .padding(EdgeInsets(top: 0, leading: 19, bottom: 0, trailing: 15))
               .frame(maxWidth: .infinity, alignment: .leading)
             
             Image(systemName: viewStore.isFavorite ? "star.fill" : "star")
-              .foregroundStyle(Color.blue)
+              .foregroundStyle(.blue)
               .frame(width: starSzie, height: starSzie)
               .onTapGesture {
                 viewStore.send(.favoriteButtonTapped)

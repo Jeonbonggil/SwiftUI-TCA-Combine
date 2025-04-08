@@ -18,6 +18,7 @@ struct ClearButtonModifier: ViewModifier {
       if !text.isEmpty {
         Button {
           text = ""
+          action()
         } label: {
           Image(systemName: "multiply.circle.fill")
             .foregroundColor(.gray)

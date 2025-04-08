@@ -63,7 +63,6 @@ struct GitHubMainView: View {
           TextField("검색어를 입력해주세요.", text: $searchText)
             .clearButton(text: $searchText, action: {
               searchText = ""
-              viewStore.send(.searchTextDidChange(searchText))
             })
             .submitLabel(.search)
             .onSubmit {
