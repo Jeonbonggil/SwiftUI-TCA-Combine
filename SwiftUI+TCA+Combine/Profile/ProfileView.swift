@@ -70,11 +70,7 @@ struct ProfileView: View {
               .frame(width: starSzie, height: starSzie)
               .onTapGesture {
                 viewStore.send(.favoriteButtonTapped)
-                print("즐겨찾기 tap: \(viewStore.isFavorite)")
-                withAnimation {
-                  // TODO: 즐겨찾기 버튼 클릭 시 애니메이션 추가
-//                  viewStore.send(.favoriteButtonTapped)
-                }
+                print("user: \(viewStore.userName ?? "") 즐겨찾기 tap: \(viewStore.isFavorite)")
               }
           }
           .padding([.leading, .trailing], 15)

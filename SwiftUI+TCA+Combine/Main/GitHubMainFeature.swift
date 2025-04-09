@@ -24,6 +24,7 @@ enum MenuTab: Int, Equatable, Identifiable, CaseIterable {
 
 @Reducer
 struct GitHubMainFeature {
+  @ObservableState
   struct State: Equatable {
     var profile: [Profile] = []
     var searchText = ""
@@ -35,6 +36,8 @@ struct GitHubMainFeature {
   enum Action: Equatable {
     /// 메뉴 탭 선택
     case selectedTabDidChange(MenuTab)
+    /// 검색어 clear
+    case clearSearchText
     /// 검색어 입력
     case searchTextDidChange(String)
     /// 검색 API 호출
@@ -57,6 +60,10 @@ struct GitHubMainFeature {
   var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
+      case .clearSearchText:
+        state.searchText = ""
+        return .none
+        
       case let .selectedTabDidChange(tab):
         state.selectedTab = tab
         switch tab {
@@ -148,7 +155,6 @@ struct GitHubMainFeature {
           }
           await send(.updateProfile(updatedProfile))
         }
-        
       }
     }
   }
