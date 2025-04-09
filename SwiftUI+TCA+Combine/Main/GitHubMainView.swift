@@ -108,9 +108,10 @@ struct GitHubMainView: View {
 
 #Preview {
   GitHubMainView(
-    store: Store(initialState: GitHubMainFeature.State(searchText: "", selectedTab: .api)) {
-      GitHubMainFeature()
-    }
+    store: Store(
+      initialState: GitHubMainFeature.State(),
+      reducer: { GitHubMainFeature() }
+    )
   )
 }
 

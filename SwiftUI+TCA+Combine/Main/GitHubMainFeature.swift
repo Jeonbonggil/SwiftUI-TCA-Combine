@@ -77,10 +77,6 @@ struct GitHubMainFeature {
   var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
-      case .clearSearchText:
-        state.searchText = ""
-        return .none
-        
       case let .selectedTabDidChange(tab):
         state.selectedTab = tab
         switch tab {
@@ -97,6 +93,10 @@ struct GitHubMainFeature {
           }
         }
         
+      case .clearSearchText:
+        state.searchText = ""
+        return .none
+        
       case let .searchTextDidChange(text):
         state.searchText = text.trimmingCharacters(in: .whitespacesAndNewlines)
         state.userParameters.page = 1
@@ -109,10 +109,10 @@ struct GitHubMainFeature {
           await send(.callSearchUsersAPI(param))
         }
         
-      case let .callSearchUsersAPI(userParameters):
+      case let .callSearchUsersAPI(param):
         return .run { send in
           do {
-            let result = try await apiManager.searchUsers(param: userParameters)
+            let result = try await apiManager.searchUsers(param: param)
             await send(.updateProfile(result.profile ?? []))
           } catch {
             print(error.localizedDescription)
