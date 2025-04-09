@@ -89,7 +89,6 @@ struct GitHubMainFeature {
           }
         case .favorite:
           state.profile = state.profile.isNotEmpty ? state.profile : []
-          state.searchText = ""
           return .run { send in
             await send(.favoriteListDidChange)
           }
@@ -107,13 +106,9 @@ struct GitHubMainFeature {
           state.profile = []
           return .none
         }
-        return .concatenate(
-          .cancel(id: CancelID.searchDebounce),
-          .run { [param = state.userParameters] send in
-            try await self.mainQueue.sleep(for: .milliseconds(300))
-            await send(.callSearchUsersAPI(param))
-          }
-        )
+        return .run { [param = state.userParameters] send in
+          await send(.callSearchUsersAPI(param))
+        }
         
       case let .callSearchUsersAPI(param):
         return .run { send in
