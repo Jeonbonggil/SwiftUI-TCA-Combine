@@ -18,7 +18,24 @@ enum MenuTab: Int, Equatable, Identifiable, CaseIterable {
     case .favorite: return "Favorite"
     }
   }
-  
+  var xOffset: CGFloat {
+    switch self {
+    case .api: return 0
+    case .favorite: return Screen.width / 2
+    }
+  }
+  var menuWidth: CGFloat {
+    switch self {
+    case .api: return Screen.width / 2
+    case .favorite: return Screen.width / 2
+    }
+  }
+  var menuHeight: CGFloat {
+    switch self {
+    case .api: return 50
+    case .favorite: return 50
+    }
+  }
   var id: Int { return rawValue }
 }
 
