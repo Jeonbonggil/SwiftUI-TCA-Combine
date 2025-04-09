@@ -74,6 +74,8 @@ struct GitHubMainFeature {
   @Dependency(\.mainQueue) var mainQueue
   @Dependency(\.gitHubAPIManager) var apiManager
   
+  enum CancelID { case searchDebounce }
+  
   var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
@@ -105,9 +107,13 @@ struct GitHubMainFeature {
           state.profile = []
           return .none
         }
-        return .run { [param = state.userParameters] send in
-          await send(.callSearchUsersAPI(param))
-        }
+        return .concatenate(
+          .cancel(id: CancelID.searchDebounce),
+          .run { [param = state.userParameters] send in
+            try await self.mainQueue.sleep(for: .milliseconds(300))
+            await send(.callSearchUsersAPI(param))
+          }
+        )
         
       case let .callSearchUsersAPI(param):
         return .run { send in
