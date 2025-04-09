@@ -88,7 +88,6 @@ struct GitHubMainFeature {
             await send(.searchTextDidChange(text))
           }
         case .favorite:
-          state.profile = state.profile.isNotEmpty ? state.profile : []
           return .run { send in
             await send(.favoriteListDidChange)
           }
@@ -132,20 +131,19 @@ struct GitHubMainFeature {
         return .none
         
       case let .loadMore(index):
-        if index == state.profile.count - 4 && !state.isLoadMore {
-          state.userParameters.page += 1
-          print("loadMore: \(index)")
-          return .run { [param = state.userParameters] send in
-            do {
-              let result = try await apiManager.searchUsers(param: param)
-              guard let profile = result.profile, profile.isNotEmpty else { return }
-              await send(.updateProfile(result.profile ?? [], true))
-            } catch {
-              print(error.localizedDescription)
-            }
+        guard state.selectedTab == .api, state.profile.count > 4,
+              index <= state.profile.count - 4, !state.isLoadMore else { return .none }
+        state.userParameters.page += 1
+        print("loadMore: \(index)")
+        return .run { [param = state.userParameters] send in
+          do {
+            let result = try await apiManager.searchUsers(param: param)
+            guard let profile = result.profile, profile.isNotEmpty else { return }
+            await send(.updateProfile(result.profile ?? [], true))
+          } catch {
+            print(error.localizedDescription)
           }
         }
-        return .none
         
       case .refreshAPI:
         state.userParameters.page = 1
