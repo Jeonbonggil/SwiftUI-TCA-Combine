@@ -83,7 +83,6 @@ struct GitHubMainFeature {
         state.selectedTab = tab
         switch tab {
         case .api:
-          state.userParameters.page = 1
           return .run { [text = state.searchText] send in
             await send(.searchTextDidChange(text))
           }
@@ -99,8 +98,7 @@ struct GitHubMainFeature {
         
       case let .searchTextDidChange(text):
         state.searchText = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        state.userParameters.page = 1
-        state.userParameters.name = state.searchText
+        state.userParameters = UserParameters(name: state.searchText)
         if state.searchText.isEmpty {
           state.profile = []
           return .none
