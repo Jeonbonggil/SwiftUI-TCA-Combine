@@ -22,8 +22,18 @@ actor PersistenceManager {
   var context: NSManagedObjectContext {
     return persistentContainer.viewContext
   }
-  nonisolated var myFetchRequest: NSFetchRequest<GitHubFavorite> {
+  nonisolated var fetchRequest: NSFetchRequest<GitHubFavorite> {
     return GitHubFavorite.fetchRequest()
+  }
+
+  func results() async -> [GitHubFavorite] {
+    do {
+      let fetchResult = try context.fetch(fetchRequest)
+      return fetchResult
+    } catch {
+      print(error.localizedDescription)
+      return []
+    }
   }
   /// 저장된 데이터 조회
   func fetch<T: NSManagedObject>(request: NSFetchRequest<T>) -> [T] {

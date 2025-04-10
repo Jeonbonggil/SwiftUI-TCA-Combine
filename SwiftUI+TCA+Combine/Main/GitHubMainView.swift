@@ -12,6 +12,7 @@ struct GitHubMainView: View {
   let store: StoreOf<GitHubMainFeature>
   @State private var localSearchText = ""
   @State private var barPoint = CGPoint(x: 0, y: 0)
+  @State private var currentTab: MenuTab = .api
   
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
@@ -26,6 +27,7 @@ struct GitHubMainView: View {
             HStack(spacing: 0) {
               ForEach(MenuTab.allCases, id: \.self) { tab in
                 Button {
+                  currentTab = tab
                   viewStore.send(.selectedTabDidChange(tab))
                   withAnimation {
                     barPoint.x = tab.xOffset
@@ -65,13 +67,13 @@ struct GitHubMainView: View {
               ScrollView {
                 LazyVStack(spacing: 0) {
                   ForEach(
-                    Array(zip(viewStore.profile.indices, viewStore.state.profile)),
+                    Array(zip(viewStore.profiles.indices, viewStore.profiles)),
                     id: \.0
                   ) { index, profile in
                     ProfileView(
                       store: Store(
                         initialState: ProfileFeature.State(
-                          // tab: viewStore.selectedTab,
+                          tab: currentTab,
                           profile: profile
                         ),
                         reducer: {
@@ -81,7 +83,6 @@ struct GitHubMainView: View {
                     )
                     .onAppear {
                       // Infinite Scrolling
-                      // print("Profile onAppear index: \(index)")
                       viewStore.send(.loadMore(index))
                     }
                   }

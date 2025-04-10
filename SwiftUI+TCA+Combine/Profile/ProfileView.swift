@@ -24,7 +24,7 @@ struct ProfileView: View {
           .font(.system(size: 17.0, weight: .bold))
           .foregroundColor(.black)
           .padding(EdgeInsets(top: 0, leading: 15, bottom: 10, trailing: 15))
-          .frame(maxWidth: Screen.width, alignment: .leading)
+          .frame(maxWidth: Screen.width, maxHeight: .infinity, alignment: .leading)
           .background(
             GeometryReader { proxy in
               // TODO: - UI 높이 처리 시 깨짐 현상 수정 필요
@@ -41,6 +41,13 @@ struct ProfileView: View {
               }
             }
           )
+          .onChange(of: viewStore.initial) { newValue in
+            if newValue.isEmpty {
+              viewHeight = viewHeight - 20.0
+            } else {
+              viewHeight = 105
+            }
+          }
         
         HStack(alignment: .center, spacing: 0) {
           if let imageUrl = viewStore.profileURL {

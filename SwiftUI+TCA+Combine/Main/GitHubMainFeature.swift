@@ -43,7 +43,7 @@ enum MenuTab: Int, Equatable, Identifiable, CaseIterable {
 struct GitHubMainFeature {
   @ObservableState
   struct State: Equatable {
-    var profile: [Profile] = []
+    var profiles: [Profile] = []
     var searchText = ""
     var userParameters = UserParameters()
     var selectedTab: MenuTab = .api
@@ -100,7 +100,7 @@ struct GitHubMainFeature {
         state.searchText = text.trimmingCharacters(in: .whitespacesAndNewlines)
         state.userParameters = UserParameters(name: state.searchText)
         if state.searchText.isEmpty {
-          state.profile = []
+          state.profiles = []
           return .none
         }
         return .run { [param = state.userParameters] send in
@@ -121,23 +121,23 @@ struct GitHubMainFeature {
       case let .updateProfile(profiles, isLoadMore):
         state.isLoadMore = isLoadMore
         if isLoadMore {
-          state.profile.append(contentsOf: profiles)
+          state.profiles.append(contentsOf: profiles)
           state.isLoadMore = false
         } else {
-          state.profile = profiles
+          state.profiles = profiles
         }
         return .none
         
       case let .loadMore(index):
-        guard state.selectedTab == .api, state.profile.count > 4,
-              index == state.profile.count - 4, !state.isLoadMore else { return .none }
+        guard state.selectedTab == .api, state.profiles.count > 4,
+              index == state.profiles.count - 4, !state.isLoadMore else { return .none }
         state.userParameters.page += 1
         print("loadMore: \(index)")
         return .run { [param = state.userParameters] send in
           do {
             let result = try await apiManager.searchUsers(param: param)
             guard let profile = result.profile, profile.isNotEmpty else { return }
-            await send(.updateProfile(result.profile ?? [], true))
+            await send(.updateProfile(profile, true))
           } catch {
             print(error.localizedDescription)
           }
@@ -150,13 +150,13 @@ struct GitHubMainFeature {
         }
         
       case .resetProfile:
-        state.profile = []
+        state.profiles = []
         return .none
         
       case .favoriteListDidChange:
         return .run { send in
           let persistenceManager = PersistenceManager()
-          let fetchRequest = persistenceManager.myFetchRequest
+          let fetchRequest = persistenceManager.fetchRequest
           let favoriteList = await persistenceManager.fetch(request: fetchRequest)
           let updatedProfile = favoriteList.map {
             Profile(

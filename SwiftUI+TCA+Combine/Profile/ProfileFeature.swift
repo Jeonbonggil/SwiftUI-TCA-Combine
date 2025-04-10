@@ -13,6 +13,7 @@ struct ProfileFeature {
   @ObservableState
   struct State: Equatable {
     var tab: MenuTab = .favorite
+    var profiles: [Profile] = []
     var profile: Profile = .empty
     var favoriteProfile: Profile? = .empty
     /// 즐겨찾기 리스트
@@ -28,8 +29,14 @@ struct ProfileFeature {
     case saveFavorite
     /// 즐겨찾기 삭제
     case deleteFavorite
+    /// 즐겨찾기 조회
+    case fetchFavoriteList
+    /// 업데이트 즐겨찾기 리스트
+    case updateFavoriteList([GitHubFavorite])
     /// 즐겨찾기 초성 만들기
     case configureInitial
+    /// Profile 업데이트
+    case updateProfile([Profile])
   }
   
   @Dependency(\.mainQueue) var mainQueue
@@ -37,7 +44,7 @@ struct ProfileFeature {
   var body: some ReducerOf<Self> {
     Reduce { state, action in
       let persistenceManager = PersistenceManager()
-      let fetchRequest = persistenceManager.myFetchRequest
+      let fetchRequest = persistenceManager.fetchRequest
       switch action {
       case .favoriteButtonTapped:
         state.profile.isFavorite.toggle()
@@ -53,27 +60,61 @@ struct ProfileFeature {
         
       case .saveFavorite:
         let favoriteProfile = state.profile
-        Task { await persistenceManager.saveFavorite(favorite: favoriteProfile) }
-        return .none
+        return .run { send in
+          await persistenceManager.saveFavorite(favorite: favoriteProfile)
+          await send(.fetchFavoriteList)
+        }
         
       case .deleteFavorite:
         let favoriteProfile = state.profile
-        Task {
+        return .run { send in
           let managedObejct = await persistenceManager.fetch(request: fetchRequest)
           if let userName = favoriteProfile.userName,
              let index = managedObejct.firstIndex(where: { $0.userName == userName }) {
             await persistenceManager.deleteFavorite(object: managedObejct[index])
           }
+          await send(.fetchFavoriteList)
         }
-        return .none
+        
+      case .fetchFavoriteList:
+        return .run { send in
+          let favoriteList = await persistenceManager.results().sorted {
+            $0.userName?.localizedCaseInsensitiveCompare($1.userName ?? "") == .orderedAscending
+          }
+          favoriteList.forEach { favorite in
+            let initial = favorite.userName?.prefix(1).uppercased()
+            if let index = favoriteList.firstIndex(where: {
+              $0.userName?.first?.uppercased() == initial
+            }) {
+              favoriteList[index].initial = initial
+            }
+          }
+          await send(.updateFavoriteList(favoriteList))
+        }
+        
+      case .updateFavoriteList(let favoriteList):
+        state.favoriteList = favoriteList
+        print("favoriteList: \(favoriteList)")
+        return .run { send in
+          await send(.configureInitial)
+        }
         
       case .configureInitial:
-        var searchList = state.favoriteList
-        if state.favoriteList.count > 0 {
-          searchList = state.searchFavoriteList
+        return .run { [favoriteList = state.favoriteList] send in
+          let profiles = favoriteList.map {
+            Profile(
+              initial: $0.initial ?? "",
+              userName: $0.userName ?? "",
+              profileURL: $0.profileURL ?? "",
+              repositoryURL: $0.repositoryURL ?? "",
+              isFavorite: $0.isFavorite
+            )
+          }
+          await send(.updateProfile(profiles))
         }
-        let initList = searchList.dropFirst()
-        let initial = initList.first?.initial?.uppercased() ?? ""
+        
+      case let .updateProfile(profiles):
+        state.profiles = profiles
         return .none
         
       }
