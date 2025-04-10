@@ -33,8 +33,6 @@ struct ProfileFeature {
     case fetchFavoriteList
     /// 업데이트 즐겨찾기 리스트
     case updateFavoriteList([GitHubFavorite])
-    /// 즐겨찾기 초성 만들기
-    case configureInitial
     /// Profile 업데이트
     case updateProfile([Profile])
   }
@@ -96,21 +94,16 @@ struct ProfileFeature {
         state.favoriteList = favoriteList
         print("favoriteList: \(favoriteList)")
         return .run { send in
-          await send(.configureInitial)
-        }
-        
-      case .configureInitial:
-        return .run { [favoriteList = state.favoriteList] send in
-          let profiles = favoriteList.map {
-            Profile(
-              initial: $0.initial ?? "",
-              userName: $0.userName ?? "",
-              profileURL: $0.profileURL ?? "",
-              repositoryURL: $0.repositoryURL ?? "",
-              isFavorite: $0.isFavorite
-            )
-          }
-          await send(.updateProfile(profiles))
+            let profiles = favoriteList.map {
+              Profile(
+                initial: $0.initial ?? "",
+                userName: $0.userName ?? "",
+                profileURL: $0.profileURL ?? "",
+                repositoryURL: $0.repositoryURL ?? "",
+                isFavorite: $0.isFavorite
+              )
+            }
+            await send(.updateProfile(profiles))
         }
         
       case let .updateProfile(profiles):
