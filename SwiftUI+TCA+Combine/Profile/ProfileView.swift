@@ -27,64 +27,66 @@ struct ProfileView: View {
           .frame(maxWidth: Screen.width, alignment: .leading)
           .background(
             GeometryReader { proxy in
-              Color.clear
-                .onAppear {
-                  // TODO: - UI 높이 처리 시 깨짐 현상 수정 필요
-//                  let calculatedHeight = viewStore.initial.isEmpty ? proxy.size.height : 0
-//                  print("proxy.size.height: \(proxy.size.height), calculatedHeight: \(calculatedHeight), initialHeight: \(initialHeight), viewHeight: \(viewHeight)")
-//                  if calculatedHeight.isFinite && calculatedHeight >= 0 {
-//                    initialHeight = calculatedHeight
-//                    viewHeight = max(0, viewHeight - initialHeight)
-//                  }
-                }
+              // TODO: - UI 높이 처리 시 깨짐 현상 수정 필요
+              WithPerceptionTracking {
+                Color.clear
+                  .onAppear {
+//                    let calculatedHeight = viewStore.initial.isEmpty ? proxy.size.height : 0
+//                    print("proxy.size.height: \(proxy.size.height), calculatedHeight: \(calculatedHeight), initialHeight: \(initialHeight), viewHeight: \(viewHeight)")
+//                    if calculatedHeight.isFinite && calculatedHeight >= 0 {
+//                      initialHeight = calculatedHeight
+//                      viewHeight = max(0, viewHeight - initialHeight)
+//                    }
+                  }
+              }
             }
           )
         
-        NavigationView {
-          HStack(alignment: .center, spacing: 0) {
-            if let imageUrl = viewStore.profileURL {
-              KFImage(URL(string: imageUrl))
-                .resizable()
-                .scaledToFill()
-                .clipShape(Circle())
-                .overlay(Circle().stroke(.black, lineWidth: 1))
-                .frame(width: imageSize, height: imageSize)
-            } else {
-              Image(systemName: "person.circle.fill")
-                .resizable()
-                .frame(width: imageSize, height: imageSize)
-                .foregroundStyle(.gray)
-                .clipShape(Circle())
-                .overlay(Circle().stroke(.black, lineWidth: 1))
-            }
-            
-            Text(viewStore.userName ?? "")
-              .font(.system(size: 17.0))
-              .foregroundColor(.black)
-              .lineLimit(2)
-              .padding(EdgeInsets(top: 0, leading: 19, bottom: 0, trailing: 15))
-              .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Image(systemName: viewStore.isFavorite ? "star.fill" : "star")
-              .foregroundStyle(.blue)
-              .frame(width: starSzie, height: starSzie)
-              .onTapGesture {
-                viewStore.send(.favoriteButtonTapped)
-                print("user: \(viewStore.userName ?? "") 즐겨찾기 tap: \(viewStore.isFavorite)")
-              }
+        HStack(alignment: .center, spacing: 0) {
+          if let imageUrl = viewStore.profileURL {
+            KFImage(URL(string: imageUrl))
+              .resizable()
+              .scaledToFill()
+              .clipShape(Circle())
+              .overlay(Circle().stroke(.black, lineWidth: 1))
+              .frame(width: imageSize, height: imageSize)
+          } else {
+            Image(systemName: "person.circle.fill")
+              .resizable()
+              .frame(width: imageSize, height: imageSize)
+              .foregroundStyle(.gray)
+              .clipShape(Circle())
+              .overlay(Circle().stroke(.black, lineWidth: 1))
           }
-          .padding([.leading, .trailing], 15)
-          .frame(width: Screen.width, alignment: .leading)
+          
+          Text(viewStore.userName ?? "")
+            .font(.system(size: 17.0))
+            .foregroundColor(.black)
+            .lineLimit(2)
+            .padding(EdgeInsets(top: 0, leading: 19, bottom: 0, trailing: 15))
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+          
+          Image(systemName: viewStore.isFavorite ? "star.fill" : "star")
+            .foregroundStyle(.blue)
+            .frame(width: starSzie, height: starSzie)
+            .contentShape(Rectangle())
+            .onTapGesture {
+              viewStore.send(.favoriteButtonTapped)
+            }
         }
+        .padding(.horizontal, 15)
+        .frame(width: Screen.width, alignment: .leading)
+        .onTapGesture {
+          showingWebviewSheet.toggle()
+        }
+        .sheet(isPresented: $showingWebviewSheet) {
+          RepoWebView(url: viewStore.repositoryURL)
+            .presentationDragIndicator(.visible)
+        }
+        
       }
       .frame(width: Screen.width, height: viewHeight)
-      .onTapGesture {
-        showingWebviewSheet.toggle()
-      }
-      .sheet(isPresented: $showingWebviewSheet) {
-        RepoWebView(url: viewStore.repositoryURL)
-          .presentationDragIndicator(.visible)
-      }
     }
   }
 }
