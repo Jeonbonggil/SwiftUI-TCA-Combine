@@ -10,7 +10,9 @@ import ComposableArchitecture
 
 @Reducer
 struct ProfileFeature {
+  @ObservableState
   struct State: Equatable {
+    var tab: MenuTab = .favorite
     var profile: Profile = .empty
     var favoriteProfile: Profile? = .empty
     /// 즐겨찾기 리스트
@@ -38,17 +40,15 @@ struct ProfileFeature {
       let fetchRequest = persistenceManager.myFetchRequest
       switch action {
       case .favoriteButtonTapped:
-        let profile = state.profile
-        Task {
+        state.profile.isFavorite.toggle()
+        return .run { [profile = state.profile] send in
           let managedObejct = await persistenceManager.fetch(request: fetchRequest)
           if let userName = profile.userName,
-             let index = managedObejct.firstIndex(where: { $0.userName == userName }) {
-            return
+             let _ = managedObejct.firstIndex(where: { $0.userName == userName }) {
+            await send(.deleteFavorite)
+          } else {
+            await send(.saveFavorite)
           }
-        }
-        state.profile.isFavorite.toggle()
-        return .run { [isFavorite = state.profile.isFavorite] send in
-          isFavorite ? await send(.saveFavorite) : await send(.deleteFavorite)
         }
         
       case .saveFavorite:
@@ -74,7 +74,6 @@ struct ProfileFeature {
         }
         let initList = searchList.dropFirst()
         let initial = initList.first?.initial?.uppercased() ?? ""
-        
         return .none
         
       }
