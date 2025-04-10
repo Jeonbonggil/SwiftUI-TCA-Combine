@@ -23,7 +23,7 @@ struct Profile: Codable, Identifiable, Equatable {
     initial: "T",
     userName: "TestUser",
     profileURL: "https://avatars.githubusercontent.com/u/14283190?v=4",
-    repositoryURL: "https://github.com/testuser"
+    repositoryURL: "https://github.com/jeonbonggil"
   )
   
   init(

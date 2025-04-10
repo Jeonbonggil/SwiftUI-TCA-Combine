@@ -132,7 +132,7 @@ struct GitHubMainFeature {
         
       case let .loadMore(index):
         guard state.selectedTab == .api, state.profile.count > 4,
-              index <= state.profile.count - 4, !state.isLoadMore else { return .none }
+              index == state.profile.count - 4, !state.isLoadMore else { return .none }
         state.userParameters.page += 1
         print("loadMore: \(index)")
         return .run { [param = state.userParameters] send in
