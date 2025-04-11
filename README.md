@@ -4,6 +4,8 @@
 
 UI: SwiftUI
 
+동시성 프로그래밍: Swift Concurrency
+
 디자인패턴: TCA(The Composible Architecture)
 
 네트워크 통신: Moya, Alamofire
