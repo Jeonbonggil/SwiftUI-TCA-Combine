@@ -58,7 +58,7 @@ struct GitHubMainFeature {
     /// 검색어 입력
     case searchTextDidChange(String)
     /// 검색 API 호출
-    case callSearchUsersAPI(UserParameters)
+    case fetchSearchUsers(UserParameters)
     /// profile 업데이트
     case updateProfile([Profile], Bool = false)
     /// 검색 API 호출 (LoadMore)
@@ -104,10 +104,10 @@ struct GitHubMainFeature {
           return .none
         }
         return .run { [param = state.userParameters] send in
-          await send(.callSearchUsersAPI(param))
+          await send(.fetchSearchUsers(param))
         }
         
-      case let .callSearchUsersAPI(param):
+      case let .fetchSearchUsers(param):
         return .run { send in
           do {
             let result = try await apiManager.searchUsers(param: param)
@@ -146,7 +146,7 @@ struct GitHubMainFeature {
       case .refreshAPI:
         state.userParameters.page = 1
         return .run { [param = state.userParameters] send in
-          await send(.callSearchUsersAPI(param))
+          await send(.fetchSearchUsers(param))
         }
         
       case .resetProfile:
