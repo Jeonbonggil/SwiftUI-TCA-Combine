@@ -206,6 +206,7 @@
 				44E78FBA2D8A500B001F396E /* SwiftUI+TCA+CombineTests */,
 				44E78FC42D8A500B001F396E /* SwiftUI+TCA+CombineUITests */,
 				44E78FA32D8A5008001F396E /* Products */,
+				FCC14D302DA93B0F006BD366 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -217,6 +218,14 @@
 				44E78FC12D8A500B001F396E /* SwiftUI+TCA+CombineUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FCC14D302DA93B0F006BD366 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				4410E5012DA8B14F005A745B /* SecretsData.xcconfig */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -428,7 +437,8 @@
 /* Begin XCBuildConfiguration section */
 		44E78FC92D8A500B001F396E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4410E5012DA8B14F005A745B /* SecretsData.xcconfig */;
+			baseConfigurationReferenceAnchor = 44E78FA42D8A5008001F396E /* SwiftUI+TCA+Combine */;
+			baseConfigurationReferenceRelativePath = SecretsData.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -492,7 +502,8 @@
 		};
 		44E78FCA2D8A500B001F396E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4410E5012DA8B14F005A745B /* SecretsData.xcconfig */;
+			baseConfigurationReferenceAnchor = 44E78FA42D8A5008001F396E /* SwiftUI+TCA+Combine */;
+			baseConfigurationReferenceRelativePath = SecretsData.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
