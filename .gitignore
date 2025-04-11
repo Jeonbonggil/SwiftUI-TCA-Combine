@@ -64,3 +64,4 @@ fastlane/test_output
 contents.xcworkspacedata
 *.xcscheme
 SwiftUI+TCA+Combine/SwiftUI+TCA+Combine/GitHubFavorite.xcdatamodeld/.xccurrentversion
+SwiftUI+TCA+Combine/Secrets.xcconfig

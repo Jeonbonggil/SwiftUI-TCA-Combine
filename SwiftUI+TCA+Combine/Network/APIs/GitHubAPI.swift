@@ -14,13 +14,13 @@ public enum GitHubAPI {
 
 extension GitHubAPI {
   private var token: String {
-    return Bundle.main.object(forInfoDictionaryKey: "GitHubToken") as? String ?? ""
+    return Bundle.main.object(forInfoDictionaryKey: "GITHUB_ACCESS_TOKEN") as? String ?? ""
   }
 }
 
 extension GitHubAPI: TargetType {
   public var baseURL: URL {
-    let domain = Bundle.main.object(forInfoDictionaryKey: "GitHubDomain") as? String ?? ""
+    let domain = Bundle.main.object(forInfoDictionaryKey: "GITHUB_DOMAIN") as? String ?? ""
     return URL(string: domain)!
   }
   public var path: String {
