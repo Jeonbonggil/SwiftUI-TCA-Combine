@@ -12,7 +12,7 @@ import Kingfisher
 struct ProfileView: View {
   let store: StoreOf<ProfileFeature>
   private let imageSize = 60.0
-  private let starSzie = 30.0
+  private let starSize = 30.0
   @State private var viewHeight = 105.0
   @State private var initialHeight = 0.0
   @State private var showingWebviewSheet = false
@@ -76,7 +76,7 @@ struct ProfileView: View {
           
           Image(systemName: viewStore.isFavorite ? "star.fill" : "star")
             .foregroundStyle(.blue)
-            .frame(width: starSzie, height: starSzie)
+            .frame(width: starSize, height: starSize)
             .contentShape(Rectangle())
             .onTapGesture {
               viewStore.send(.favoriteButtonTapped)
