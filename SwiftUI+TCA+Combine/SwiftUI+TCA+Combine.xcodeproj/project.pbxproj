@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4410E4E02DA8A444005A745B /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4410E4DF2DA8A444005A745B /* Secrets.xcconfig */; };
 		44B28FF92D9CD0C800FAEE45 /* GitHubAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B28FEF2D9CD0C800FAEE45 /* GitHubAPIManager.swift */; };
 		44B28FFA2D9CD0C800FAEE45 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B28FF42D9CD0C800FAEE45 /* UserInfo.swift */; };
 		44B28FFB2D9CD0C800FAEE45 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B28FF32D9CD0C800FAEE45 /* Profile.swift */; };
@@ -47,7 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4410E4DF2DA8A444005A745B /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		4410E5012DA8B14F005A745B /* SecretsData.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SecretsData.xcconfig; sourceTree = "<group>"; };
 		44B28FEE2D9CD0C800FAEE45 /* GitHubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPI.swift; sourceTree = "<group>"; };
 		44B28FEF2D9CD0C800FAEE45 /* GitHubAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPIManager.swift; sourceTree = "<group>"; };
 		44B28FF12D9CD0C800FAEE45 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
@@ -201,7 +200,6 @@
 		44E78F992D8A5008001F396E = {
 			isa = PBXGroup;
 			children = (
-				4410E4DF2DA8A444005A745B /* Secrets.xcconfig */,
 				44E358E22D913D8B007277F4 /* App */,
 				44E358F42D914EBA007277F4 /* Extensions */,
 				44E358E92D914E6F007277F4 /* Common */,
@@ -365,7 +363,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4410E4E02DA8A444005A745B /* Secrets.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,7 +435,7 @@
 /* Begin XCBuildConfiguration section */
 		44E78FC92D8A500B001F396E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4410E4DF2DA8A444005A745B /* Secrets.xcconfig */;
+			baseConfigurationReference = 4410E5012DA8B14F005A745B /* SecretsData.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -502,7 +499,7 @@
 		};
 		44E78FCA2D8A500B001F396E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4410E4DF2DA8A444005A745B /* Secrets.xcconfig */;
+			baseConfigurationReference = 4410E5012DA8B14F005A745B /* SecretsData.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
