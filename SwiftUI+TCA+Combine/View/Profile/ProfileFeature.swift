@@ -53,7 +53,7 @@ struct ProfileFeature {
              let _ = managedObejct.firstIndex(where: { $0.userName == userName }) {
             await send(.deleteFavorite)
           } else {
-            await send(.saveFavorite)
+            await send(.fetchFavoriteList)
           }
         }
         
@@ -61,12 +61,11 @@ struct ProfileFeature {
         let favoriteProfile = state.profile
         return .run { send in
           await persistenceManager.saveFavorite(favorite: favoriteProfile)
-          await send(.fetchFavoriteList)
+          await send(.updateFavoriteList(persistenceManager.results()))
         }
         
       case .deleteFavorite:
-        let favoriteProfile = state.profile
-        return .run { send in
+        return .run { [favoriteProfile = state.profile] send in
           let managedObejct = await persistenceManager.fetch(request: fetchRequest)
           if let userName = favoriteProfile.userName,
              let index = managedObejct.firstIndex(where: { $0.userName == userName }) {
@@ -77,9 +76,7 @@ struct ProfileFeature {
         
       case .fetchFavoriteList:
         return .run { send in
-          let favoriteList = await persistenceManager.results().sorted {
-            $0.userName?.localizedCaseInsensitiveCompare($1.userName ?? "") == .orderedAscending
-          }
+          var favoriteList = await persistenceManager.results()
           favoriteList.forEach { favorite in
             let initial = favorite.userName?.prefix(1).uppercased()
             if let index = favoriteList.firstIndex(where: {
@@ -88,24 +85,28 @@ struct ProfileFeature {
               favoriteList[index].initial = initial
             }
           }
-          await send(.updateFavoriteList(favoriteList))
+          favoriteList = favoriteList.sorted {
+            $0.initial?.localizedCaseInsensitiveCompare($1.initial ?? "") == .orderedAscending
+          }
+          let profiles = favoriteList.map {
+            Profile(
+              initial: $0.initial ?? "",
+              userName: $0.userName ?? "",
+              profileURL: $0.profileURL ?? "",
+              repositoryURL: $0.repositoryURL ?? "",
+              isFavorite: $0.isFavorite
+            )
+          }
+          await send(.updateProfile(profiles))
+          await send(.saveFavorite)
         }
         
       case .updateFavoriteList(let favoriteList):
         state.favoriteList = favoriteList
-        print("favoriteList: \(favoriteList)")
-        return .run { send in
-            let profiles = favoriteList.map {
-              Profile(
-                initial: $0.initial ?? "",
-                userName: $0.userName ?? "",
-                profileURL: $0.profileURL ?? "",
-                repositoryURL: $0.repositoryURL ?? "",
-                isFavorite: $0.isFavorite
-              )
-            }
-            await send(.updateProfile(profiles))
+        for object in state.favoriteList {
+          print("updateFavoriteList object: \(object.initial ?? ""), \(object.userName ?? ""), \(object.isFavorite)")
         }
+        return .none
         
       case let .updateProfile(profiles):
         state.profiles = profiles

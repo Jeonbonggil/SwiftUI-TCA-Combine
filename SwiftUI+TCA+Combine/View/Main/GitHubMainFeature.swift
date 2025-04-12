@@ -71,6 +71,8 @@ struct GitHubMainFeature {
     case resetProfile
     /// 즐겨찾기 조회
     case favoriteListDidChange
+    /// 즐겨찾기 리스트 업데이트
+    case updateFavoriteList([GitHubFavorite])
   }
   
   @Dependency(\.mainQueue) var mainQueue
@@ -160,10 +162,27 @@ struct GitHubMainFeature {
         
       case .favoriteListDidChange:
         return .run { send in
-          let persistenceManager = PersistenceManager()
-          let fetchRequest = persistenceManager.fetchRequest
-          let favoriteList = await persistenceManager.fetch(request: fetchRequest)
-          let updatedProfile = favoriteList.map {
+          var favoriteList = await PersistenceManager.shared.results()
+          for object in favoriteList {
+            let initial = object.userName?.prefix(1).uppercased()
+            if let index = favoriteList.firstIndex(where: {
+              $0.userName?.first?.uppercased() == initial
+            }) {
+              favoriteList[index].initial = initial
+            }
+            print("favoriteList: \(object.initial ?? ""), \(object.userName ?? ""), \(object.isFavorite)")
+          }
+          favoriteList = favoriteList.sorted {
+            $0.initial?.localizedCaseInsensitiveCompare($1.initial ?? "") == .orderedAscending
+          }
+          await send(.updateFavoriteList(favoriteList))
+        }
+
+      case let .updateFavoriteList(favoriteList):
+        if favoriteList.isEmpty {
+          return .none
+        } else {
+          state.profiles = favoriteList.map {
             Profile(
               initial: $0.initial ?? "",
               userName: $0.userName ?? "",
@@ -172,7 +191,10 @@ struct GitHubMainFeature {
               isFavorite: $0.isFavorite
             )
           }
-          await send(.updateProfile(updatedProfile))
+          state.profileFeatures = IdentifiedArrayOf(uniqueElements: state.profiles.map {
+            ProfileFeature.State(tab: state.selectedTab, profile: $0)
+          })
+          return .none
         }
         
       default:
