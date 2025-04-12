@@ -29,7 +29,10 @@ struct SwiftUI_TCA_CombineApp: App {
   var body: some Scene {
     WindowGroup {
       GitHubMainView(
-        store: Store(initialState: GitHubMainFeature.State(), reducer: { GitHubMainFeature() })
+        store: Store(
+          initialState: GitHubMainFeature.State(),
+          reducer: { GitHubMainFeature() }
+        )
       )
 //      .environment(\.managedObjectContext, persistenceController.container.viewContext)
     }

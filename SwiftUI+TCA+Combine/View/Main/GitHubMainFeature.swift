@@ -43,6 +43,7 @@ enum MenuTab: Int, Equatable, Identifiable, CaseIterable {
 struct GitHubMainFeature {
   @ObservableState
   struct State: Equatable {
+    var profileFeatures: IdentifiedArrayOf<ProfileFeature.State> = []
     var profiles: [Profile] = []
     var searchText = ""
     var userParameters = UserParameters()
@@ -51,6 +52,7 @@ struct GitHubMainFeature {
   }
   
   enum Action: Equatable {
+    case profileFeatures(IdentifiedActionOf<ProfileFeature>)
     /// 메뉴 탭 선택
     case selectedTabDidChange(MenuTab)
     /// 검색어 clear
@@ -126,6 +128,9 @@ struct GitHubMainFeature {
         } else {
           state.profiles = profiles
         }
+        state.profileFeatures = IdentifiedArrayOf(uniqueElements: profiles.map {
+          ProfileFeature.State(tab: state.selectedTab, profile: $0)
+        })
         return .none
         
       case let .loadMore(index):
@@ -169,7 +174,14 @@ struct GitHubMainFeature {
           }
           await send(.updateProfile(updatedProfile))
         }
+        
+      default:
+        return .none
+        
       }
+    }
+    .forEach(\.profileFeatures, action: \.profileFeatures) {
+      ProfileFeature()
     }
   }
 }

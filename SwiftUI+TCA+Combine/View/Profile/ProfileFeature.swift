@@ -11,7 +11,8 @@ import ComposableArchitecture
 @Reducer
 struct ProfileFeature {
   @ObservableState
-  struct State: Equatable {
+  struct State: Equatable, Identifiable {
+    let id = UUID()
     var tab: MenuTab = .favorite
     var profiles: [Profile] = []
     var profile: Profile = .empty

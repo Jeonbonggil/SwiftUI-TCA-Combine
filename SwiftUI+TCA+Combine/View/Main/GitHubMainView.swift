@@ -66,25 +66,14 @@ struct GitHubMainView: View {
             WithPerceptionTracking {
               ScrollView {
                 LazyVStack(spacing: 0) {
-                  ForEach(
-                    Array(zip(viewStore.profiles.indices, viewStore.profiles)),
-                    id: \.0
-                  ) { index, profile in
-                    ProfileView(
-                      store: Store(
-                        initialState: ProfileFeature.State(
-                          tab: currentTab,
-                          profile: profile
-                        ),
-                        reducer: {
-                          ProfileFeature()
-                        }
-                      )
-                    )
-                    .onAppear {
-                      // Infinite Scrolling
-                      viewStore.send(.loadMore(index))
-                    }
+                  ForEachStore(
+                    store.scope(state: \.profileFeatures, action: \.profileFeatures)
+                  ) { profileStore in
+                    ProfileView(store: profileStore)
+                      .onAppear {
+                        // TODO: - 실행 방법을 모르겠음(viewStore, store 둘 다 싪패)
+//                        store.send(.loadMore(index))  // Infinite Scrolling
+                      }
                   }
                 }
               }
@@ -119,22 +108,4 @@ struct GitHubMainView: View {
       reducer: { GitHubMainFeature() }
     )
   )
-}
-
-// MARK: - Binding 헬퍼 확장
-
-extension ViewStoreOf<GitHubMainFeature> {
-  var searchTextBinding: Binding<String> {
-    Binding(
-      get: { self.searchText },
-      set: { self.send(.searchTextDidChange($0)) }
-    )
-  }
-  
-  var selectedTabBinding: Binding<MenuTab> {
-    Binding(
-      get: { self.selectedTab },
-      set: { self.send(.selectedTabDidChange($0)) }
-    )
-  }
 }
