@@ -24,7 +24,7 @@ struct ProfileView: View {
           Text(viewStore.profile.initial)
             .font(.system(size: 17.0, weight: .bold))
             .foregroundColor(.black)
-            .padding(EdgeInsets(top: 0, leading: 15, bottom: 10, trailing: 15))
+            .padding(EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 15))
             .frame(maxWidth: Screen.width, alignment: .leading)
             .background(
               GeometryReader { geometry in
@@ -84,14 +84,6 @@ struct ProfileView: View {
           }
         }
         .frame(width: Screen.width, height: viewHeight)
-        .onChange(of: viewStore.profile.initial) { newValue in
-          if newValue.isEmpty {
-            viewHeight -= initialHeight
-          } else {
-            viewHeight = 105.0
-          }
-          print("viewHeight: \(viewHeight), newValue: \(newValue)")
-        }
       }
     }
   }
