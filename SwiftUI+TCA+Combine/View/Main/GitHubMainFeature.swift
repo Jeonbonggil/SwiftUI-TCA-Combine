@@ -43,6 +43,7 @@ enum MenuTab: Int, Equatable, Identifiable, CaseIterable {
 struct GitHubMainFeature {
   @ObservableState
   struct State: Equatable {
+    /// 자식 State
     var profileFeatures: IdentifiedArrayOf<ProfileFeature.State> = []
     var profiles: [Profile] = []
     var searchText = ""
@@ -52,6 +53,7 @@ struct GitHubMainFeature {
   }
   
   enum Action: Equatable {
+    /// 자식 액션
     case profileFeatures(IdentifiedActionOf<ProfileFeature>)
     /// 메뉴 탭 선택
     case selectedTabDidChange(MenuTab)
@@ -73,6 +75,8 @@ struct GitHubMainFeature {
     case favoriteListDidChange
     /// 즐겨찾기 리스트 업데이트
     case updateFavoriteList([GitHubFavorite])
+    /// 부모에게 즐겨찾기 변경 알림
+    case notifyFavoriteChanged
   }
   
   @Dependency(\.mainQueue) var mainQueue
@@ -197,6 +201,11 @@ struct GitHubMainFeature {
           return .none
         }
         
+      case .profileFeatures(.element(id: _, action: .notifyFavoriteChanged)):
+        return .run { send in
+          await send(.favoriteListDidChange)
+        }
+
       default:
         return .none
         

@@ -36,6 +36,8 @@ struct ProfileFeature {
     case updateFavoriteList([GitHubFavorite])
     /// Profile 업데이트
     case updateProfile([Profile])
+    /// 부모에게 즐겨찾기 변경 알림
+    case notifyFavoriteChanged
   }
   
   @Dependency(\.mainQueue) var mainQueue
@@ -71,7 +73,10 @@ struct ProfileFeature {
              let index = managedObejct.firstIndex(where: { $0.userName == userName }) {
             await persistenceManager.deleteFavorite(object: managedObejct[index])
           }
-          await send(.fetchFavoriteList)
+          for object in managedObejct {
+            print("deleteFavorite object: \(object.initial ?? ""), \(object.userName ?? ""), \(object.isFavorite)")
+          }
+          await send(.notifyFavoriteChanged)
         }
         
       case .fetchFavoriteList:
@@ -110,6 +115,9 @@ struct ProfileFeature {
         
       case let .updateProfile(profiles):
         state.profiles = profiles
+        return .none
+        
+      default:
         return .none
         
       }
