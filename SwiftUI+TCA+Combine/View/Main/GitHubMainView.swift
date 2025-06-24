@@ -70,8 +70,7 @@ struct GitHubMainView: View {
                 ) { profileStore in
                   ProfileView(store: profileStore)
                     .onAppear {
-                      // TODO: - 실행 방법을 모르겠음
-                      // store.send(.loadMore(index))  // Infinite Scrolling
+                      store.send(.itemAppeared(id: profileStore.id))  // Pagination
                     }
                 }
               }

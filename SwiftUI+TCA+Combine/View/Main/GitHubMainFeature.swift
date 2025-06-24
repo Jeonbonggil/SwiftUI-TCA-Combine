@@ -62,9 +62,11 @@ struct GitHubMainFeature {
     /// 검색어 입력
     case searchTextDidChange(String)
     /// 검색 API 호출
-    case fetchSearchUsers(UserParameters)
+    case fetchSearchUsers(UserParameters, Bool = false)
     /// profile 업데이트
     case updateProfile([Profile], Bool = false)
+    /// 아이템이 나타났을 때 호출
+    case itemAppeared(id: UUID)
     /// 검색 API 호출 (LoadMore)
     case loadMore(Int)
     /// API 새로고침
@@ -106,7 +108,7 @@ struct GitHubMainFeature {
         
       case let .searchTextDidChange(text):
         state.searchText = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        state.userParameters = UserParameters(name: state.searchText)
+        state.userParameters = UserParameters(name: state.searchText, page: 1)
         if state.searchText.isEmpty {
           state.profiles = []
           return .none
@@ -115,11 +117,12 @@ struct GitHubMainFeature {
           await send(.fetchSearchUsers(param))
         }
         
-      case let .fetchSearchUsers(param):
+      case let .fetchSearchUsers(param, isLoadMore):
+        state.userParameters.page = isLoadMore ? param.page : 1
         return .run { send in
           do {
             let result = try await apiManager.searchUsers(param: param)
-            await send(.updateProfile(result.profile ?? []))
+            await send(.updateProfile(result.profile ?? [], isLoadMore))
           } catch {
             print(error.localizedDescription)
             await send(.resetProfile)
@@ -134,24 +137,28 @@ struct GitHubMainFeature {
         } else {
           state.profiles = profiles
         }
-        state.profileFeatures = IdentifiedArrayOf(uniqueElements: profiles.map {
+        state.profileFeatures = IdentifiedArrayOf(uniqueElements: state.profiles.map {
           ProfileFeature.State(tab: state.selectedTab, profile: $0)
         })
         return .none
         
+      case let .itemAppeared(id):
+        // id를 사용해 배열의 인덱스를 찾습니다.
+        guard let index = state.profileFeatures.firstIndex(where: { $0.id == id }) else {
+          return .none
+        }
+        // 찾은 인덱스로 기존 loadMore 액션을 호출합니다.
+        return .send(.loadMore(index))
+        
       case let .loadMore(index):
-        guard state.selectedTab == .api, state.profiles.count > 4,
-              index == state.profiles.count - 4, !state.isLoadMore else { return .none }
+        guard state.selectedTab == .api,
+              state.profiles.count > 4,
+              index == state.profiles.count - 4,
+              !state.isLoadMore else { return .none }
         state.userParameters.page += 1
         print("loadMore: \(index)")
         return .run { [param = state.userParameters] send in
-          do {
-            let result = try await apiManager.searchUsers(param: param)
-            guard let profile = result.profile, profile.isNotEmpty else { return }
-            await send(.updateProfile(profile, true))
-          } catch {
-            print(error.localizedDescription)
-          }
+          await send(.fetchSearchUsers(param, true))
         }
         
       case .refreshAPI:
