@@ -62,8 +62,9 @@ final public class GitHubAPIManager {
     let result = await provider.request(api)
     do {
       let response = try result.get()
-      print("😁👍🏻💪🏻\(api.self) Response Status Code: \(response.statusCode)")
-      print("😁👍🏻💪🏻\(api.self) Response Data: \(JSONResponseDataFormatter(response.data))")
+      print("😁👍🏻💪🏻\(api.self)")
+      print("😁👍🏻💪🏻Response Status Code: \(response.statusCode)")
+      print("😁👍🏻💪🏻Response Data: \(JSONResponseDataFormatter(response.data))")
       let object = try response.map(ResponseObject.self)
       retryCount = 200...299 ~= response.statusCode ? 0 : retryCount + 1
       switch response.statusCode {
