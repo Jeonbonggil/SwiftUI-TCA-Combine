@@ -77,8 +77,7 @@ struct GitHubMainView: View {
               }
             }
             .simultaneousGesture(DragGesture().onChanged { _ in
-              // ScrollView에서 Drag 시 Keyboard 내리기
-              UIApplication.shared.endEditing()
+              UIApplication.shared.endEditing() // ScrollView에서 Drag 시 Keyboard 내리기
             })
             .onChange(of: store.searchText) { _ in
               proxy.scrollTo(0, anchor: .top) // 스크롤 최상단으로 이동

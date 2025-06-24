@@ -10,9 +10,12 @@ import ComposableArchitecture
 import Kingfisher
 
 struct ProfileView: View {
+  private struct DrawingConstants {
+    static let imageSize = 60.0
+    static let starSize = 30.0
+  }
+  
   let store: StoreOf<ProfileFeature>
-  private let imageSize = 60.0
-  private let starSize = 30.0
   @State private var viewHeight = 125.0
   @State private var initialHeight = 0.0
   @State private var showingWebviewSheet = false
@@ -45,11 +48,11 @@ struct ProfileView: View {
               .scaledToFill()
               .clipShape(Circle())
               .overlay(Circle().stroke(.black, lineWidth: 1))
-              .frame(width: imageSize, height: imageSize)
+              .frame(width: DrawingConstants.imageSize, height: DrawingConstants.imageSize)
           } else {
             Image(systemName: "person.circle.fill")
               .resizable()
-              .frame(width: imageSize, height: imageSize)
+              .frame(width: DrawingConstants.imageSize, height: DrawingConstants.imageSize)
               .foregroundStyle(.gray)
               .clipShape(Circle())
               .overlay(Circle().stroke(.black, lineWidth: 1))
@@ -65,7 +68,7 @@ struct ProfileView: View {
           
           Image(systemName: store.profile.isFavorite ? "star.fill" : "star")
             .foregroundStyle(.blue)
-            .frame(width: starSize, height: starSize)
+            .frame(width: DrawingConstants.starSize, height: DrawingConstants.starSize)
             .contentShape(Rectangle())
             .onTapGesture {
               store.send(.favoriteButtonTapped)
