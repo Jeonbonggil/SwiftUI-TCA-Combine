@@ -34,19 +34,19 @@
 
 /* Begin PBXFileReference section */
 		4410E5012DA8B14F005A745B /* SecretsData.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SecretsData.xcconfig; sourceTree = "<group>"; };
-		44E78FA22D8A5008001F396E /* SwiftUI+TCA+Combine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI+TCA+Combine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		44E78FB72D8A500B001F396E /* SwiftUI+TCA+CombineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftUI+TCA+CombineTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		44E78FC12D8A500B001F396E /* SwiftUI+TCA+CombineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftUI+TCA+CombineUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		44E78FA22D8A5008001F396E /* SwiftUI-TCA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-TCA.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		44E78FB72D8A500B001F396E /* SwiftUI-TCATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftUI-TCATests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		44E78FC12D8A500B001F396E /* SwiftUI-TCA-UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftUI-TCA-UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		FC4B0D512DAA89CC00F65F48 /* Exceptions for "Resource" folder in "SwiftUI+TCA+Combine" target */ = {
+		FC4B0D512DAA89CC00F65F48 /* Exceptions for "Resource" folder in "SwiftUI-TCA" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Info.plist,
 				SecretsData.xcconfig,
-				"SwiftUI-TCA-Combine-Info.plist",
 			);
-			target = 44E78FA12D8A5008001F396E /* SwiftUI+TCA+Combine */;
+			target = 44E78FA12D8A5008001F396E /* SwiftUI-TCA */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -69,7 +69,7 @@
 		44E78FA42D8A5008001F396E /* Resource */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				FC4B0D512DAA89CC00F65F48 /* Exceptions for "Resource" folder in "SwiftUI+TCA+Combine" target */,
+				FC4B0D512DAA89CC00F65F48 /* Exceptions for "Resource" folder in "SwiftUI-TCA" target */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -152,9 +152,9 @@
 		44E78FA32D8A5008001F396E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				44E78FA22D8A5008001F396E /* SwiftUI+TCA+Combine.app */,
-				44E78FB72D8A500B001F396E /* SwiftUI+TCA+CombineTests.xctest */,
-				44E78FC12D8A500B001F396E /* SwiftUI+TCA+CombineUITests.xctest */,
+				44E78FA22D8A5008001F396E /* SwiftUI-TCA.app */,
+				44E78FB72D8A500B001F396E /* SwiftUI-TCATests.xctest */,
+				44E78FC12D8A500B001F396E /* SwiftUI-TCA-UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -170,9 +170,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		44E78FA12D8A5008001F396E /* SwiftUI+TCA+Combine */ = {
+		44E78FA12D8A5008001F396E /* SwiftUI-TCA */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 44E78FCB2D8A500B001F396E /* Build configuration list for PBXNativeTarget "SwiftUI+TCA+Combine" */;
+			buildConfigurationList = 44E78FCB2D8A500B001F396E /* Build configuration list for PBXNativeTarget "SwiftUI-TCA" */;
 			buildPhases = (
 				44E78F9E2D8A5008001F396E /* Sources */,
 				44E78F9F2D8A5008001F396E /* Frameworks */,
@@ -191,7 +191,7 @@
 				FCC14D542DA93E6A006BD366 /* Common */,
 				FCC14D552DA93E9F006BD366 /* Network */,
 			);
-			name = "SwiftUI+TCA+Combine";
+			name = "SwiftUI-TCA";
 			packageProductDependencies = (
 				44E78FD52D8A5133001F396E /* ComposableArchitecture */,
 				44E78FD82D8A5267001F396E /* CombineMoya */,
@@ -201,12 +201,12 @@
 				44E78FE32D8A5A4D001F396E /* Swinject */,
 			);
 			productName = "SwiftUI+TCA+Combine";
-			productReference = 44E78FA22D8A5008001F396E /* SwiftUI+TCA+Combine.app */;
+			productReference = 44E78FA22D8A5008001F396E /* SwiftUI-TCA.app */;
 			productType = "com.apple.product-type.application";
 		};
-		44E78FB62D8A500B001F396E /* SwiftUI+TCA+CombineTests */ = {
+		44E78FB62D8A500B001F396E /* SwiftUI-TCATests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 44E78FCE2D8A500B001F396E /* Build configuration list for PBXNativeTarget "SwiftUI+TCA+CombineTests" */;
+			buildConfigurationList = 44E78FCE2D8A500B001F396E /* Build configuration list for PBXNativeTarget "SwiftUI-TCATests" */;
 			buildPhases = (
 				44E78FB32D8A500B001F396E /* Sources */,
 				44E78FB42D8A500B001F396E /* Frameworks */,
@@ -220,16 +220,16 @@
 			fileSystemSynchronizedGroups = (
 				44E78FBA2D8A500B001F396E /* SwiftUI+TCA+CombineTests */,
 			);
-			name = "SwiftUI+TCA+CombineTests";
+			name = "SwiftUI-TCATests";
 			packageProductDependencies = (
 			);
 			productName = "SwiftUI+TCA+CombineTests";
-			productReference = 44E78FB72D8A500B001F396E /* SwiftUI+TCA+CombineTests.xctest */;
+			productReference = 44E78FB72D8A500B001F396E /* SwiftUI-TCATests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		44E78FC02D8A500B001F396E /* SwiftUI+TCA+CombineUITests */ = {
+		44E78FC02D8A500B001F396E /* SwiftUI-TCA-UITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 44E78FD12D8A500B001F396E /* Build configuration list for PBXNativeTarget "SwiftUI+TCA+CombineUITests" */;
+			buildConfigurationList = 44E78FD12D8A500B001F396E /* Build configuration list for PBXNativeTarget "SwiftUI-TCA-UITests" */;
 			buildPhases = (
 				44E78FBD2D8A500B001F396E /* Sources */,
 				44E78FBE2D8A500B001F396E /* Frameworks */,
@@ -243,11 +243,11 @@
 			fileSystemSynchronizedGroups = (
 				44E78FC42D8A500B001F396E /* SwiftUI+TCA+CombineUITests */,
 			);
-			name = "SwiftUI+TCA+CombineUITests";
+			name = "SwiftUI-TCA-UITests";
 			packageProductDependencies = (
 			);
 			productName = "SwiftUI+TCA+CombineUITests";
-			productReference = 44E78FC12D8A500B001F396E /* SwiftUI+TCA+CombineUITests.xctest */;
+			productReference = 44E78FC12D8A500B001F396E /* SwiftUI-TCA-UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -294,9 +294,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				44E78FA12D8A5008001F396E /* SwiftUI+TCA+Combine */,
-				44E78FB62D8A500B001F396E /* SwiftUI+TCA+CombineTests */,
-				44E78FC02D8A500B001F396E /* SwiftUI+TCA+CombineUITests */,
+				44E78FA12D8A5008001F396E /* SwiftUI-TCA */,
+				44E78FB62D8A500B001F396E /* SwiftUI-TCATests */,
+				44E78FC02D8A500B001F396E /* SwiftUI-TCA-UITests */,
 			);
 		};
 /* End PBXProject section */
@@ -352,12 +352,12 @@
 /* Begin PBXTargetDependency section */
 		44E78FB92D8A500B001F396E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 44E78FA12D8A5008001F396E /* SwiftUI+TCA+Combine */;
+			target = 44E78FA12D8A5008001F396E /* SwiftUI-TCA */;
 			targetProxy = 44E78FB82D8A500B001F396E /* PBXContainerItemProxy */;
 		};
 		44E78FC32D8A500B001F396E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 44E78FA12D8A5008001F396E /* SwiftUI+TCA+Combine */;
+			target = 44E78FA12D8A5008001F396E /* SwiftUI-TCA */;
 			targetProxy = 44E78FC22D8A500B001F396E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -417,7 +417,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -476,7 +476,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -497,14 +497,14 @@
 				DEVELOPMENT_TEAM = LH2D7MUGD3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Resource/SwiftUI-TCA-Combine-Info.plist";
+				INFOPLIST_FILE = Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -529,14 +529,14 @@
 				DEVELOPMENT_TEAM = LH2D7MUGD3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Resource/SwiftUI-TCA-Combine-Info.plist";
+				INFOPLIST_FILE = Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -595,6 +595,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LH2D7MUGD3;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.Bong.SwiftUI-TCA-CombineUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -612,6 +613,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LH2D7MUGD3;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.Bong.SwiftUI-TCA-CombineUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -634,7 +636,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		44E78FCB2D8A500B001F396E /* Build configuration list for PBXNativeTarget "SwiftUI+TCA+Combine" */ = {
+		44E78FCB2D8A500B001F396E /* Build configuration list for PBXNativeTarget "SwiftUI-TCA" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				44E78FCC2D8A500B001F396E /* Debug */,
@@ -643,7 +645,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		44E78FCE2D8A500B001F396E /* Build configuration list for PBXNativeTarget "SwiftUI+TCA+CombineTests" */ = {
+		44E78FCE2D8A500B001F396E /* Build configuration list for PBXNativeTarget "SwiftUI-TCATests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				44E78FCF2D8A500B001F396E /* Debug */,
@@ -652,7 +654,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		44E78FD12D8A500B001F396E /* Build configuration list for PBXNativeTarget "SwiftUI+TCA+CombineUITests" */ = {
+		44E78FD12D8A500B001F396E /* Build configuration list for PBXNativeTarget "SwiftUI-TCA-UITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				44E78FD22D8A500B001F396E /* Debug */,
