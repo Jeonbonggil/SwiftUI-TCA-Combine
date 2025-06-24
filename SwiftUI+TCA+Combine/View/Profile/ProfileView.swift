@@ -11,35 +11,27 @@ import Kingfisher
 
 struct ProfileView: View {
   private struct DrawingConstants {
+    static let initialEdgeInsets = EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 15)
+    static let usernameEdgeInsets = EdgeInsets(top: 0, leading: 19, bottom: 0, trailing: 15)
     static let imageSize = 60.0
     static let starSize = 30.0
+    static let contentHeight = 85.0
   }
   
   let store: StoreOf<ProfileFeature>
-  @State private var viewHeight = 125.0
-  @State private var initialHeight = 0.0
   @State private var showingWebviewSheet = false
   
   var body: some View {
     WithPerceptionTracking {
       VStack(alignment: .leading, spacing: 0) {
-        Text(store.profile.initial)
-          .font(.system(size: 17.0, weight: .bold))
-          .foregroundColor(.black)
-          .padding(EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 15))
-          .frame(maxWidth: Screen.width, alignment: .leading)
-          .background(
-            GeometryReader { geometry in
-              Color.clear
-                .onAppear {
-                  if store.profile.initial == "" {
-                    initialHeight = geometry.size.height
-                    viewHeight -= initialHeight
-                  }
-                  print("geometry: \(geometry.size.height), viewHeight: \(viewHeight)")
-                }
-            }
-          )
+        let initial = store.profile.initial
+        if !initial.isEmpty {
+          Text(initial)
+            .font(.system(size: 17.0, weight: .bold))
+            .foregroundColor(.black)
+            .padding(DrawingConstants.initialEdgeInsets)
+            .frame(maxWidth: Screen.width, alignment: .leading)
+        }
         
         HStack(alignment: .center, spacing: 0) {
           if let imageUrl = store.profile.profileURL {
@@ -62,7 +54,7 @@ struct ProfileView: View {
             .font(.system(size: 17.0))
             .foregroundColor(.black)
             .lineLimit(2)
-            .padding(EdgeInsets(top: 0, leading: 19, bottom: 0, trailing: 15))
+            .padding(DrawingConstants.usernameEdgeInsets)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             .contentShape(Rectangle())
           
@@ -75,7 +67,7 @@ struct ProfileView: View {
             }
         }
         .padding(.horizontal, 15)
-        .frame(width: Screen.width, alignment: .leading)
+        .frame(width: Screen.width, height: DrawingConstants.contentHeight, alignment: .leading)
         .frame(maxHeight: .infinity, alignment: .leading)
         .onTapGesture {
           showingWebviewSheet.toggle()
@@ -85,7 +77,7 @@ struct ProfileView: View {
             .presentationDragIndicator(.visible)
         }
       }
-      .frame(width: Screen.width, height: viewHeight)
+      .frame(width: Screen.width)
     }
   }
 }
