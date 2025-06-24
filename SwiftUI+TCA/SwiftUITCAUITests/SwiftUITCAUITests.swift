@@ -1,13 +1,13 @@
 //
-//  SwiftUI_TCA_CombineUITests.swift
-//  SwiftUI+TCA+CombineUITests
+//  SwiftUITCAUITests.swift
+//  SwiftUITCAUITests
 //
 //  Created by ec-jbg on 3/19/25.
 //
 
 import XCTest
 
-final class SwiftUI_TCA_CombineUITests: XCTestCase {
+final class SwiftUITCAUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

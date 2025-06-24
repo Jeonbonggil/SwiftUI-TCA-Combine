@@ -1,5 +1,5 @@
 //
-//  SwiftUI_TCA_CombineApp.swift
+//  SwiftUITCAApp.swift
 //  SwiftUI+TCA+Combine
 //
 //  Created by ec-jbg on 3/19/25.
@@ -22,7 +22,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 
 @main
-struct SwiftUI_TCA_CombineApp: App {
+struct SwiftUITCAApp: App {
   let persistenceController = PersistenceManager.shared
   @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
   

@@ -1,13 +1,13 @@
 //
-//  SwiftUI_TCA_CombineUITestsLaunchTests.swift
-//  SwiftUI+TCA+CombineUITests
+//  SwiftUITCAUITestsLaunchTests.swift
+//  SwiftUITCAUITestsLaunchTests
 //
 //  Created by ec-jbg on 3/19/25.
 //
 
 import XCTest
 
-final class SwiftUI_TCA_CombineUITestsLaunchTests: XCTestCase {
+final class SwiftUITCAUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
