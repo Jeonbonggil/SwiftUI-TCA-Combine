@@ -86,9 +86,7 @@ struct ProfileView: View {
   ProfileView(
     store: Store(
       initialState: ProfileFeature.State(profile: Profile.preview),
-      reducer: {
-        ProfileFeature()
-      }
+      reducer: { ProfileFeature() }
     )
   )
 }
