@@ -1,4 +1,4 @@
-# SwiftUI-TCA-Combine
+# SwiftUI-TCA
 
 ### SwiftUI, TCA로 구성한 GitHub repo 검색 및 즐겨찾기 하기
 
